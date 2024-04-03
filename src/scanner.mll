@@ -46,68 +46,7 @@ rule tokenize = parse
   | '+' { PLUS }
   | '-' { MINUS } 
   | '*' { TIMES }
-  | '/' {   | ['\r'] { token lexbuf }
-  | ':' { COLON }
-  | '\t' { TAB }
-  | ' ' { SPACE }
-  | '\n' { EOL }
-  | "not" { NOT }
-  | "if" { IF }
-  | "else" { ELSE }
-  | "elif" { raise (Failure("NotImplementedError: elif has not been implemented!" )) }
-  | "assert" { raise (Failure("NotImplementedError: assert has not been implemented!" )) }
-  | "pass" { PASS }
-  | "continue" { CONTINUE }
-  | "break" { BREAK }
-  | "class" { CLASS }
-  | "for" { FOR }
-  | "while" { WHILE }
-  | "def" { DEF }
-  | "int" { INT }
-  | "float" { FLOAT }
-  | "str" { STRING }
-  | "bool" { BOOL }
-  | "func" { FUNC }
-  | "list" { ARR }
-  | ',' { COMMA }
-  | '.' { DOT }
-  | "!=" { NEQ }
-  | '<' { LT }
-  | '>' { GT }
-  | "<=" { LEQ }
-  | ">=" { GEQ }
-  | "and" { AND }
-  | "or" { OR }
-  | "in" { INOA }
-  | "return" { RETURN }
-  | "range" { RANGE }
-  | "is" { IS }
-  | "None" { NONE }
-  | "range" { RANGE }
-  | '#' { comment lexbuf }
-  | '+' { PLUS }
-  | '-' { MINUS } 
-  | '*' { TIMES }
   | '/' { DIVIDE }
-  | "**" { EXP }
-  | "+=" { PLUSEQ }
-  | "-=" { MINUSEQ }
-  | "*=" { TIMESEQ }
-  | "/=" { DIVIDEEQ}
-  | "**=" { EXPEQ }
-  | '(' { LPAREN }
-  | ')' { RPAREN }
-  | '{' { LBRACE }
-  | '}' { RBRACE }
-  | '[' { LBRACK }
-  | ']' { RBRACK }
-  | "==" { EQ }
-  | '=' { ASN }  
-  | ';' { SEP }
-  | "->" { ARROW }
-  | "type" { TYPE }
-  | "print" { PRINT }
-  | "import" { IMPORT }DIVIDE }
   | "**" { EXP }
   | "+=" { PLUSEQ }
   | "-=" { MINUSEQ }
@@ -129,5 +68,5 @@ rule tokenize = parse
   | _ as char { raise (Failure("illegal character " ^ Char.escaped char)) }
 
  and comment = parse
-  | '\n' { EOL}
+  | '\n' { EOL }
   | _ { comment lexbuf }
