@@ -4,6 +4,8 @@
 
 let digit = ['0'-'9']
 let letter = ['a'-'z' 'A'-'Z']
+let exp = ('e'|'E')('+'|'-')?['0'-'9']+
+let cfloat = ('.'['0'-'9']+exp?|['0'-'9']+('.'['0'-'9']*exp?|exp))
 
 rule token = parse
   | '\r'     { token lexbuf }
@@ -18,6 +20,13 @@ rule token = parse
   | '*'      { TIMES }
   | '/'      { DIVIDE }
   | '%'      { MOD }
+  | "**"     { EXP }
+  | "+="     { PLUSEQ }
+  | "-="     { MINUSEQ }
+  | "*="     { TIMESEQ }
+  | "/="     { DIVIDEEQ }
+  | "%="     { MODEQ }
+  | "**="    { EXPEQ }
   | '('      { LPAREN }
   | ')'      { RPAREN }
   | '['      { LBRACK }
@@ -44,14 +53,17 @@ rule token = parse
   | "break"  { BREAK }
   | "continue" { CONTINUE }
   | "def"    { DEF }
+  | "->"     { ARROW }
+  | ":"      { COLON }
   | "print"  { PRINT }
   | "range"  { RANGE }
+  | "pass"   { PASS }
   | "assert" { ASSERT }
   | "bool"   { BOOL }
   | "int"    { INT }
-  | "true"   { BLIT(true)  }
-  | "false"  { BLIT(false) }
+  | "true" | "false" as lem { BLIT(bool_of_string lem)  }
   | digit+ as lem { INT_LITERAL(int_of_string lem) }
+  | cfloat as lem { FLOAT_LITERAL(float_of_string lem) }
   | letter (digit | letter | '_')* as lem { VARIABLE(lem) }
   | eof { EOF }
   | _ as char { raise (Failure("illegal character " ^ Char.escaped char)) }

@@ -1,14 +1,15 @@
 %{ open Ast %}
 
 %token SPACE TAB EOL
-%token ASSIGN PLUS MINUS TIMES DIVIDE MOD
+%token ASSIGN PLUS MINUS TIMES DIVIDE MOD EXP PLUSEQ MINUSEQ TIMESEQ DIVIDEEQ MODEQ EXPEQ
 %token LPAREN RPAREN LBRACK RBRACK LBRACE RBRACE SEMI COMMA
 %token EQ NEQ LT LEQ GT GEQ AND OR NOT
 %token IF ELSE ELIF WHILE FOR RETURN BREAK CONTINUE 
-%token DEF PRINT RANGE ASSERT
+%token DEF ARROW COLON PRINT RANGE PASS ASSERT
 %token INT BOOL
 %token <bool> BLIT
 %token <int> INT_LITERAL
+%token <float> FLOAT_LITERAL
 %token <string> VARIABLE
 %token EOF
 
@@ -33,6 +34,13 @@ one_token:
  | TIMES { "TIMES" }
  | DIVIDE { "DIVIDE" }
  | MOD { "MOD" }
+ | EXP { "EXP" }
+ | PLUSEQ { "PLUSEQ" }
+ | MINUSEQ { "MINUSEQ" }
+ | TIMESEQ { "TIMESEQ" }
+ | DIVIDEEQ { "DIVIDEEQ" }
+ | MODEQ { "MODEQ" }
+ | EXPEQ { "EXPEQ" }
  | LPAREN { "LPAREN" }
  | RPAREN { "RPAREN" }
  | LBRACK { "LBRACK" }
@@ -59,11 +67,15 @@ one_token:
  | BREAK { "BREAK" }
  | CONTINUE { "CONTINUE" }
  | DEF { "DEF" }
+ | ARROW { "ARROW" }
+ | COLON { "COLON" }
  | PRINT { "PRINT" }
  | RANGE { "RANGE" }
+ | PASS { "PASS" }
  | ASSERT { "ASSERT" }
  | BOOL { "BOOL" }
  | INT { "INT" }
  | VARIABLE { "VARIABLE: " ^ $1}
  | BLIT { "BOOL: " ^ string_of_bool $1}
  | INT_LITERAL { "INT_LITERAL: " ^ string_of_int $1}
+ | FLOAT_LITERAL { "FLOAT_LITERAL: " ^ string_of_float $1}
