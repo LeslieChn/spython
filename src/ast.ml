@@ -1,10 +1,4 @@
-(* Abstract Syntax Tree*)
+type tokenseq = string list
 
-type operator = Add | Sub | Mul | Div
-
-type expr =
-    Binop of expr * operator * expr
-  | Lit of int
-  | Seq of expr * expr
-  | Asn of string * expr
-  | Var of string
+let string_of_program l =
+  "\n\nScanned program: \n" ^ (List.fold_left (fun s e -> s ^ "\n" ^ e) "" l)
