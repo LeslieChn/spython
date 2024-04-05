@@ -13,17 +13,28 @@
 %token <string> VARIABLE
 %token EOF
 
-%start program
-%type <Ast.tokenseq> program 
+%start program_rule
+%type <Ast.program> program_rule
+
+%right ASSIGN PLUSEQ MINUSEQ TIMESEQ DIVIDEEQ MODEQ 
+%left OR
+%left AND
+%left EQ NEQ
+%left LT LEQ GT GEQ
+%left PLUS MINUS
+%left TIMES DIVIDE MOD
+%right EXP EXPEQ
+%right NOT
 
 %%
-program:
-  tokens EOF { $1 }
+program_rule:
+  decls EOF { $1 }
 
-tokens:
-   /* nothing */ { [] }
- | one_token tokens { $1 :: $2 }
- 
+decls:
+ /* nothing */ { ([], [])                 }
+ | decls vdecl { (($2 :: fst $1), snd $1) }
+ | decls fdecl { (fst $1, ($2 :: snd $1)) }
+
 one_token:
  | SPACE { "SPACE" }
  | TAB { "TAB" }
