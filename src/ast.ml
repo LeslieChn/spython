@@ -1,4 +1,4 @@
-type bop = Add | Sub | Equal | Neq | Less | And | Or
+type bop = Add | Sub | Mult | Div | Equal | Neq | Less | And | Or
 
 type typ = Bool | Int | Float | String
 
@@ -29,7 +29,7 @@ type tokenseq = string list
 let stream_of_token lst = 
   "\n\nScanned program: \n" ^ (List.fold_left (fun s e -> s ^ "\n" ^ e) "" lst)
 
-(* Pretty-printing functions *)
+(* Pretty-printing functions 
 let string_of_op = function
     Add -> "+"
   | Sub -> "-"
@@ -76,3 +76,4 @@ let string_of_program fdecl =
   String.concat "" (List.map string_of_vdecl fdecl.locals) ^
   String.concat "" (List.map string_of_stmt fdecl.body) ^
   "\n"
+  *)

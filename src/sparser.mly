@@ -17,8 +17,6 @@
 %start token_stream
 %type <Ast.tokenseq> token_stream
 
-%start program_rule
-%type <Ast.program> program_rule
 
 %right ASSIGN PLUSEQ MINUSEQ TIMESEQ DIVIDEEQ MODEQ 
 %left OR
@@ -100,12 +98,6 @@ one_token:
 /* token stream end */
 
 /* ast start */
-program_rule:
-  decls EOF { $1 }
 
-decls:
- /* nothing */ { ([], [])                 }
- | decls vdecl { (($2 :: fst $1), snd $1) }
- | decls fdecl { (fst $1, ($2 :: snd $1)) }
 
 /* ast end */
