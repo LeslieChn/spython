@@ -10,8 +10,12 @@
 %token <bool> BLIT
 %token <int> INT_LITERAL
 %token <float> FLOAT_LITERAL
+%token <string> STRING_LITERAL
 %token <string> VARIABLE
 %token EOF
+
+%start token_stream
+%type <Ast.tokenseq> token_stream
 
 %start program_rule
 %type <Ast.program> program_rule
@@ -27,13 +31,14 @@
 %right NOT
 
 %%
-program_rule:
-  decls EOF { $1 }
 
-decls:
- /* nothing */ { ([], [])                 }
- | decls vdecl { (($2 :: fst $1), snd $1) }
- | decls fdecl { (fst $1, ($2 :: snd $1)) }
+/* token stream start */
+token_stream:
+  tokens EOF { $1 }
+
+tokens:
+   /* nothing */ { [] }
+ | one_token tokens { $1 :: $2 }
 
 one_token:
  | SPACE { "SPACE" }
@@ -90,3 +95,17 @@ one_token:
  | BLIT { "BOOL: " ^ string_of_bool $1}
  | INT_LITERAL { "INT_LITERAL: " ^ string_of_int $1}
  | FLOAT_LITERAL { "FLOAT_LITERAL: " ^ string_of_float $1}
+ | STRING_LITERAL { "STRING_LITERAL: " ^ $1}
+
+/* token stream end */
+
+/* ast start */
+program_rule:
+  decls EOF { $1 }
+
+decls:
+ /* nothing */ { ([], [])                 }
+ | decls vdecl { (($2 :: fst $1), snd $1) }
+ | decls fdecl { (fst $1, ($2 :: snd $1)) }
+
+/* ast end */

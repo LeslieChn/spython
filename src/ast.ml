@@ -1,10 +1,12 @@
 type bop = Add | Sub | Equal | Neq | Less | And | Or
 
-type typ = Bool | Int | Float
+type typ = Bool | Int | Float | String
 
 type expr =
   | Literal of int
   | BoolLit of bool
+  | Float of float
+  | String of string
   | Id of string
   | Binop of expr * bop * expr
   | Assign of string * expr
@@ -22,6 +24,10 @@ type program = {
   body: stmt list;
 }
 
+type tokenseq = string list
+
+let stream_of_token lst = 
+  "\n\nScanned program: \n" ^ (List.fold_left (fun s e -> s ^ "\n" ^ e) "" lst)
 
 (* Pretty-printing functions *)
 let string_of_op = function

@@ -6,6 +6,7 @@ let digit = ['0'-'9']
 let letter = ['a'-'z' 'A'-'Z']
 let exp = ('e'|'E')('+'|'-')?['0'-'9']+
 let cfloat = ('.'['0'-'9']+exp?|['0'-'9']+('.'['0'-'9']*exp?|exp))
+let cstring = ('"'[^'"''\\']*('\\'_[^'"''\\']*)*'"')
 
 rule token = parse
   | '\r'     { token lexbuf }
@@ -64,6 +65,7 @@ rule token = parse
   | "true" | "false" as lem { BLIT(bool_of_string lem)  }
   | digit+ as lem { INT_LITERAL(int_of_string lem) }
   | cfloat as lem { FLOAT_LITERAL(float_of_string lem) }
+  | cstring as lem { STRING_LITERAL(strip_quotes lem)}
   | letter (digit | letter | '_')* as lem { VARIABLE(lem) }
   | eof { EOF }
   | _ as char { raise (Failure("illegal character " ^ Char.escaped char)) }
