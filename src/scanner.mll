@@ -1,6 +1,16 @@
 (* Ocamllex scanner for S-Python *)
 
-{ open Sparser }
+{ 
+  open Sparser 
+
+  let rm_quotes str =
+    let len = String.length str in
+      if len < 2 then
+        ""
+      else
+        String.sub str 1 (len - 2)
+
+}
 
 let digit = ['0'-'9']
 let letter = ['a'-'z' 'A'-'Z']
@@ -62,10 +72,11 @@ rule token = parse
   | "assert" { ASSERT }
   | "bool"   { BOOL }
   | "int"    { INT }
+  | "str"    { STRING }
   | "true" | "false" as lem { BLIT(bool_of_string lem)  }
   | digit+ as lem { INT_LITERAL(int_of_string lem) }
   | cfloat as lem { FLOAT_LITERAL(float_of_string lem) }
-  | cstring as lem { STRING_LITERAL(lem) }
+  | cstring as lem { STRING_LITERAL(rm_quotes lem) }
   | letter (digit | letter | '_')* as lem { VARIABLE(lem) }
   | eof { EOF }
   | _ as char { raise (Failure("illegal character " ^ Char.escaped char)) }
