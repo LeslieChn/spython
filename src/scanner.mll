@@ -22,7 +22,8 @@ rule token = parse
   | '\r'     { token lexbuf }
   | "#"      { comment lexbuf }
   | "\'\'\'" { m_comment lexbuf }
-  | ' '      { SPACE }
+(* TODO: detect space for indentation *)
+  | ' '      { token lexbuf }
   | '\t'     { TAB }
   | '\n'     { EOL }
   | '='      { ASSIGN }
