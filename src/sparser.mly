@@ -7,7 +7,7 @@
 %token IF ELSE ELIF WHILE FOR RETURN BREAK CONTINUE 
 %token DEF ARROW COLON PRINT RANGE PASS ASSERT
 %token INT BOOL STRING
-%token <bool> BLIT
+%token <bool> BOOL_LITERAL
 %token <int> INT_LITERAL
 %token <float> FLOAT_LITERAL
 %token <string> STRING_LITERAL
@@ -42,11 +42,27 @@ stmt_list:
   | stmt_list stmt_rule { $2 :: $1 }
 
 stmt_rule:
-  | expr_rule                     { Expr $1 }
-  | PRINT LPAREN expr_rule RPAREN EOL { Print($3) }
+  | expr_rule SEMI				{ Expr $1 }
+  | PRINT LPAREN expr_rule RPAREN SEMI		{ Print($3) }
 
 expr_rule:
-  | STRING_LITERAL { StringLit $1 }
+  | FLOAT_LITERAL { Lit(FloatLit($1)) }
+  | BOOL_LITERAL { Lit(BoolLit($1)) }
+  | INT_LITERAL { Lit(IntLit($1)) }
+  | STRING_LITERAL { Lit (StringLit $1) }
+  | expr_rule EQ expr_rule { Binop($1, Eq, $3) }
+  | expr_rule NEQ expr_rule { Binop($1, Neq, $3) }
+  | expr_rule LT expr_rule { Binop($1, Less, $3) }
+  | expr_rule GT expr_rule { Binop($1, Greater, $3) }
+  | expr_rule LEQ expr_rule { Binop($1, Leq, $3) }
+  | expr_rule GEQ expr_rule { Binop($1, Geq, $3) }
+  | expr_rule AND expr_rule { Binop($1, And, $3) }
+  | expr_rule OR expr_rule { Binop($1, Or, $3) }
+  | expr_rule PLUS expr_rule { Binop($1, Add, $3) }
+  | expr_rule MINUS expr_rule { Binop($1, Sub, $3) }
+  | expr_rule TIMES expr_rule { Binop($1, Mul, $3) }
+  | expr_rule DIVIDE expr_rule { Binop($1, Div, $3) }
+  | expr_rule EXP expr_rule { Binop($1, Exp, $3) }
 
 /* ast end */
 
@@ -109,6 +125,6 @@ one_token:
  | ASSERT { "ASSERT" }
  | BOOL { "BOOL" }
  | INT { "INT" }
- | STRING { "STR" } | VARIABLE { "VARIABLE: " ^ $1} | BLIT { "BOOL: " ^ string_of_bool $1} | INT_LITERAL { "INT_LITERAL: " ^ string_of_int $1} | FLOAT_LITERAL { "FLOAT_LITERAL: " ^ string_of_float $1}
+ | STRING { "STR" } | VARIABLE { "VARIABLE: " ^ $1} | BOOL_LITERAL { "BOOL: " ^ string_of_bool $1} | INT_LITERAL { "INT_LITERAL: " ^ string_of_int $1} | FLOAT_LITERAL { "FLOAT_LITERAL: " ^ string_of_float $1}
  | STRING_LITERAL { "STRING_LITERAL: " ^ $1}
 /* token stream end */

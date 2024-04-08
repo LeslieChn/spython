@@ -25,7 +25,8 @@ rule token = parse
 (* TODO: detect space for indentation *)
   | ' '      { token lexbuf }
   | '\t'     { TAB }
-  | '\n'     { EOL }
+(* TODO: detect space for indentation *)
+  | '\n'     {token lexbuf}
   | '='      { ASSIGN }
   | '+'      { PLUS }
   | '-'      { MINUS }
@@ -74,7 +75,7 @@ rule token = parse
   | "bool"   { BOOL }
   | "int"    { INT }
   | "str"    { STRING }
-  | "true" | "false" as lem { BLIT(bool_of_string lem)  }
+  | "true" | "false" as lem { BOOL_LITERAL(bool_of_string lem)  }
   | digit+ as lem { INT_LITERAL(int_of_string lem) }
   | cfloat as lem { FLOAT_LITERAL(float_of_string lem) }
   | cstring as lem { STRING_LITERAL(rm_quotes lem) }
