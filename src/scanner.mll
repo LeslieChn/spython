@@ -1,8 +1,8 @@
 (* Ocamllex scanner for S-Python *)
 
 { 
-  open Sparser 
-
+  open Sparser
+  exception Error of char
   let rm_quotes str =
     let len = String.length str in
       if len < 2 then
@@ -22,11 +22,9 @@ rule token = parse
   | '\r'     { token lexbuf }
   | "#"      { comment lexbuf }
   | "\'\'\'" { m_comment lexbuf }
-(* TODO: detect space for indentation *)
-  | ' '      { token lexbuf }
+  | ' '      { SPACE } 
   | '\t'     { TAB }
-(* TODO: detect space for indentation *)
-  | '\n'     {token lexbuf}
+  | '\n'     { Lexing.new_line lexbuf; EOL }
   | '='      { ASSIGN }
   | '+'      { PLUS }
   | '-'      { MINUS }
@@ -74,6 +72,7 @@ rule token = parse
   | "assert" { ASSERT }
   | "bool"   { BOOL }
   | "int"    { INT }
+  | "float"  { FLOAT }
   | "str"    { STRING }
   | "true" | "false" as lem { BOOL_LITERAL(bool_of_string lem)  }
   | digit+ as lem { INT_LITERAL(int_of_string lem) }
@@ -81,7 +80,7 @@ rule token = parse
   | cstring as lem { STRING_LITERAL(rm_quotes lem) }
   | letter (digit | letter | '_')* as lem { VARIABLE(lem) }
   | eof { EOF }
-  | _ as char { raise (Failure("illegal character " ^ Char.escaped char)) }
+  | _ as c { raise (Error c) }
 
  and m_comment = parse
   | "\'\'\'" { token lexbuf }

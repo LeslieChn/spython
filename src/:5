@@ -1,12 +1,12 @@
-(*
 let string_of_token_seq lst  =
-  "\n\nScanned program: \n" ^ (List.fold_left (fun s e -> s ^ "\n" ^ e) "" lst)
+ let ls = List.map string_of_token lst in
+  "\n\nScanned program: \n" ^ (List.fold_left (fun s e -> s ^ "\n" ^ e) "" ls)
 
-let string_of_token (t:Scanner.token) =
+let string_of_token (t:Scanner.token) = 
  match t with
- | SPACE -> "SPACE"
- | TAB -> "TAB"
- | EOL -> "EOL"
+   SPACE -> "SPACE" 
+ | TAB -> "TAB" 
+ | EOL -> "EOL" 
  | ASSIGN -> "ASSIGN" 
  | PLUS -> "PLUS" 
  | MINUS -> "MINUS" 
@@ -60,4 +60,3 @@ let string_of_token (t:Scanner.token) =
  | INT_LITERAL -> "INT_LITERAL: "
  | FLOAT_LITERAL -> "FLOAT_LITERAL: " 
  | STRING_LITERAL -> "STRING_LITERAL: "
-*)

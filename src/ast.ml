@@ -54,9 +54,3 @@ let rec string_of_stmt = function
 
 let string_of_program l = 
   String.concat "" (List.map string_of_stmt l)
-
-(* print token seq *) 
-type tokenseq = string list
-
-let string_of_token l =
-  "\n\nScanned program: \n" ^ (List.fold_left (fun s e -> s ^ "\n" ^ e) "" l)
