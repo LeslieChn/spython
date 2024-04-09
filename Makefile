@@ -1,6 +1,6 @@
 .PHONY: all clean byte 
 
-OCB_FLAGS = -I src -use-ocamlfind -lib unix
+OCB_FLAGS = -I src -use-menhir -lib unix
 OCB = ocamlbuild $(OCB_FLAGS)
 
 all: clean native
