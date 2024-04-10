@@ -20,6 +20,7 @@ let cstring = ('"'[^'"''\\']*('\\'_[^'"''\\']*)*'"')
 
 rule token = parse
   | '\r'     { token lexbuf }
+  | ""       { token lexbuf }
   | "#"      { comment lexbuf }
   | "\'\'\'" { m_comment lexbuf }
   | ' '      { SPACE } 
