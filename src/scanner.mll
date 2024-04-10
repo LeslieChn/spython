@@ -84,6 +84,7 @@ rule token = parse
 
  and m_comment = parse
   | "\'\'\'" { token lexbuf }
+  | "\'\'\'\n" { token lexbuf }
   | _ { m_comment lexbuf }
 
  and comment = parse

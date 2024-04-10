@@ -1,63 +1,30 @@
-(*
-let string_of_token_seq lst  =
-  "\n\nScanned program: \n" ^ (List.fold_left (fun s e -> s ^ "\n" ^ e) "" lst)
+open Printf
+open Token
+open Sparser
 
-let string_of_token (t:Scanner.token) =
- match t with
- | SPACE -> "SPACE"
- | TAB -> "TAB"
- | EOL -> "EOL"
- | ASSIGN -> "ASSIGN" 
- | PLUS -> "PLUS" 
- | MINUS -> "MINUS" 
- | TIMES -> "TIMES" 
- | DIVIDE -> "DIVIDE" 
- | MOD -> "MOD" 
- | EXP -> "EXP" 
- | PLUSEQ -> "PLUSEQ" 
- | MINUSEQ -> "MINUSEQ" 
- | TIMESEQ -> "TIMESEQ" 
- | DIVIDEEQ -> "DIVIDEEQ" 
- | MODEQ -> "MODEQ" 
- | EXPEQ -> "EXPEQ" 
- | LPAREN -> "LPAREN" 
- | RPAREN -> "RPAREN" 
- | LBRACK -> "LBRACK" 
- | RBRACK -> "RBRACK" 
- | LBRACE -> "LBRACE" 
- | RBRACE -> "RBRACE" 
- | SEMI -> "SEMI" 
- | COMMA -> "COMMA" 
- | EQ -> "EQ" 
- | NEQ -> "NEQ" 
- | LT -> "LT" 
- | LEQ -> "LEQ" 
- | GT -> "GT" 
- | GEQ -> "GEQ" 
- | AND -> "AND" 
- | OR -> "OR" 
- | NOT -> "NOT" 
- | IF -> "IF" 
- | ELSE -> "ELSE" 
- | ELIF -> "ELIF" 
- | WHILE -> "WHILE" 
- | FOR -> "FOR" 
- | RETURN -> "RETURN" 
- | BREAK -> "BREAK" 
- | CONTINUE -> "CONTINUE" 
- | DEF -> "DEF" 
- | ARROW -> "ARROW" 
- | COLON -> "COLON" 
- | PRINT -> "PRINT" 
- | RANGE -> "RANGE" 
- | PASS -> "PASS" 
- | ASSERT -> "ASSERT" 
- | BOOL -> "BOOL" 
- | INT -> "INT" 
- | STRING -> "STRING"
- | VARIABLE -> "VARIABLE: " 
- | BOOL_LITERAL -> "BOOL: "
- | INT_LITERAL -> "INT_LITERAL: "
- | FLOAT_LITERAL -> "FLOAT_LITERAL: " 
- | STRING_LITERAL -> "STRING_LITERAL: "
-*)
+let get_token_list lexbuf = 
+  let rec work acc = 
+    match Scanner.token lexbuf with
+    | EOF -> acc
+    | t -> work (t :: acc)
+  in List.rev (work [])
+
+let split_by_line lst =
+  let blank_line = ref true in
+  let rec split_acc lst acc current =
+    match lst with
+    | [] -> List.rev (current :: acc)
+    | hd :: tl when hd = EOL && not !blank_line ->
+            blank_line := true ; split_acc tl (List.rev (hd :: current) :: acc) [] 
+    | hd :: tl when hd = EOL && !blank_line ->
+            split_acc tl acc [] 
+    | hd :: tl when hd = TAB || hd = SPACE ->
+            split_acc tl acc (hd :: current)
+    | hd :: tl ->
+            blank_line := false; split_acc tl acc (hd :: current)
+  in
+  split_acc lst [] []
+
+let print_token_list lst =
+  List.iter (fun x -> Printf.printf "%s " (string_of_token x)) lst;
+  print_endline "" 
