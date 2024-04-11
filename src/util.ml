@@ -46,6 +46,33 @@ let get_indent_width (lst: token list list)  =
     in
     iter_ln lst []
 
+let indent_to_scope (counted_lst: (int * token list) list) =
+    let st = Stack.create () in 
+    let rec indent_or_dedent counted_lst = 
+        let indent_width = fst counted_lst in
+        let lst_data = snd counted_lst in
+        let st_top = Stack.top st in
+        if indent_width > st_top then begin
+            Stack.push indent_width st;
+            LBRACE :: lst_data
+        end
+        else if indent_width < (Stack.top st) then begin
+            Stack.pop st;
+            indent_or_dedent (indent_width, RBRACE :: lst_data)
+        end 
+        else
+            lst_data
+    in
+    let rec flush_indent acc = 
+        if Stack.length st > 1 then (Stack.pop st; flush_indent (RBRACE :: acc))
+        else
+            acc
+    in
+    let rec go lst acc = 
+        match lst with
+        [] -> List.rev ((flush_indent []) :: acc)
+        | hd :: tl -> go tl ((indent_or_dedent hd) :: acc)
+    in Stack.push 0 st; go counted_lst []
 (*
 let convert_to_c (lst : token list list) = 
     let max_indent = ref 0 in
