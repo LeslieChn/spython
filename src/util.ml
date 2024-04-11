@@ -57,9 +57,7 @@ let indent_to_scope (counted_lst: (int * token list) list) =
             let st_top = Stack.top st in
             if dedenting then
             (
-                if indent_width > st_top then
-                    (fprintf stderr "indentation error\n"; exit 1)
-                else if indent_width < st_top then (
+                if indent_width <> st_top then (
                     Stack.pop st;
                     indent_or_dedent (indent_width, RBRACE :: lst_data) true
                 )
