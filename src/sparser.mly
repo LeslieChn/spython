@@ -5,7 +5,7 @@
 %token SPACE TAB EOL
 %token ASSIGN PLUS MINUS TIMES DIVIDE MOD EXP PLUSEQ MINUSEQ TIMESEQ DIVIDEEQ MODEQ EXPEQ
 %token LPAREN RPAREN LBRACK RBRACK LBRACE RBRACE SEMI COMMA
-%token EQ NEQ LT LEQ GT GEQ AND OR NOT
+%token EQ NEQ LT LEQ GT GEQ AND OR NOT NEG
 %token IF ELSE ELIF WHILE FOR RETURN BREAK CONTINUE 
 %token DEF ARROW COLON PRINT RANGE PASS ASSERT
 %token BOOL INT FLOAT STRING
@@ -15,9 +15,6 @@
 %token <string> STRING_LITERAL
 %token <string> VARIABLE
 %token EOF
-
-%start token_seq
-%type <token list> token_seq
 
 %start program_rule
 %type <Ast.stmt list> program_rule
@@ -30,11 +27,9 @@
 %left PLUS MINUS
 %left TIMES DIVIDE MOD
 %right EXP EXPEQ
-%right NOT
+%right NOT NEG
 
 %%
-
-/* ast start */
 
 program_rule:
   stmt_list EOF { List.rev $1 }
@@ -52,6 +47,7 @@ expr_rule:
   | BOOL_LITERAL { Lit(BoolLit($1)) }
   | INT_LITERAL { Lit(IntLit($1)) }
   | STRING_LITERAL { Lit (StringLit $1) }
+  | MINUS expr_rule %prec NEG { Unop(Neg, $2) }
   | expr_rule EQ expr_rule { Binop($1, Eq, $3) }
   | expr_rule NEQ expr_rule { Binop($1, Neq, $3) }
   | expr_rule LT expr_rule { Binop($1, Less, $3) }
@@ -65,74 +61,3 @@ expr_rule:
   | expr_rule TIMES expr_rule { Binop($1, Mul, $3) }
   | expr_rule DIVIDE expr_rule { Binop($1, Div, $3) }
   | expr_rule EXP expr_rule { Binop($1, Exp, $3) }
-
-/* ast end */
-
-/* token stream start */
-token_seq:
-  tokens EOF { $1 }
-
-tokens:
-   /* nothing */ { [] }
- | token tokens { $1 :: $2 }
-
-token:
-   SPACE { SPACE }
- | TAB { TAB }
- | EOL { EOL }
- | ASSIGN { ASSIGN }
- | PLUS { PLUS }
- | MINUS { MINUS }
- | TIMES { TIMES }
- | DIVIDE { DIVIDE }
- | MOD { MOD }
- | EXP { EXP }
- | PLUSEQ { PLUSEQ }
- | MINUSEQ { MINUSEQ }
- | TIMESEQ { TIMESEQ }
- | DIVIDEEQ { DIVIDEEQ }
- | MODEQ { MODEQ }
- | EXPEQ { EXPEQ }
- | LPAREN { LPAREN }
- | RPAREN { RPAREN }
- | LBRACK { LBRACK }
- | RBRACK { RBRACK }
- | LBRACE { LBRACE }
- | RBRACE { RBRACE }
- | SEMI { SEMI }
- | COMMA { COMMA }
- | EQ { EQ }
- | NEQ { NEQ }
- | LT { LT }
- | LEQ { LEQ }
- | GT { GT }
- | GEQ { GEQ }
- | AND { AND }
- | OR { OR }
- | NOT { NOT }
- | IF { IF }
- | ELSE { ELSE }
- | ELIF { ELIF }
- | WHILE { WHILE }
- | FOR { FOR }
- | RETURN { RETURN }
- | BREAK { BREAK }
- | CONTINUE { CONTINUE }
- | DEF { DEF }
- | ARROW { ARROW }
- | COLON { COLON }
- | PRINT { PRINT }
- | RANGE { RANGE }
- | PASS { PASS }
- | ASSERT { ASSERT }
- | BOOL { BOOL }
- | INT { INT }
- | FLOAT { FLOAT }
- | STRING { STRING } 
- | VARIABLE { VARIABLE $1 } 
- | BOOL_LITERAL { BOOL_LITERAL $1 }
- | INT_LITERAL { INT_LITERAL $1}
- | FLOAT_LITERAL { FLOAT_LITERAL $1}
- | STRING_LITERAL { STRING_LITERAL $1}
-
-/* token stream end */

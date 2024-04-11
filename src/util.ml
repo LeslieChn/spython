@@ -13,7 +13,7 @@ let split_by_line lst =
   let blank_line = ref true in
   let rec split_acc lst acc current =
     match lst with
-    | [] -> List.rev (current :: acc)
+    | [] -> List.rev (acc)
     | hd :: tl when hd = EOL && not !blank_line ->
             blank_line := true ; split_acc tl (List.rev (hd :: current) :: acc) [] 
     | hd :: tl when hd = EOL && !blank_line ->
@@ -29,6 +29,22 @@ let create_lexbuf token_lst =
   let input = String.concat "" (List.map (string_of_token) token_lst ) in
   (*printf "token string: %s token_lst : %d\n" input (List.length token_lst);*)
   Lexing.from_string input
+
+let get_indent_width (lst: token list list)  =
+    let tab_width = 4 in 
+    let rec chk_ln ln acc =
+        match ln with
+        hd :: tl when hd = TAB -> chk_ln tl (acc + tab_width)
+        | hd :: tl when hd = SPACE -> chk_ln tl (acc + 1)
+        | hd :: tl -> (acc, hd :: tl)
+        | _ -> (acc, ln)
+    in
+    let rec iter_ln lln acc =
+        match lln with
+        [] -> List.rev acc
+        | hd :: tl -> iter_ln tl ((chk_ln hd 0) :: acc)
+    in
+    iter_ln lst []
 
 (*
 let convert_to_c (lst : token list list) = 
@@ -58,6 +74,8 @@ let convert_to_c (lst : token list list) =
         | hd :: tl -> append hd (flatten tl) in
     flatten lst
 *)
+
+
 let print_token_list lst =
   List.iter (fun x -> Printf.printf "%s " (string_of_token x)) lst;
   print_endline "" 

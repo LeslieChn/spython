@@ -16,6 +16,7 @@ type literal =
 type expr = 
   | Lit of literal
   | Binop of expr * bop * expr 
+  | Unop of uop * expr
 
 type stmt = 
   | Expr of expr

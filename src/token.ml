@@ -35,6 +35,7 @@ let string_of_token (t:token) =
  | AND -> "&&" 
  | OR -> "||" 
  | NOT -> "not" 
+ | NEG -> "-"
  | IF -> "if" 
  | ELSE -> "else" 
  | ELIF -> "elif" 
