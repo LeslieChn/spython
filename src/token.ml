@@ -41,13 +41,17 @@ let string_of_token (t:token) =
  | ELIF -> "elif" 
  | WHILE -> "while" 
  | FOR -> "for" 
+ | IN -> "in"
  | RETURN -> "return" 
  | BREAK -> "break" 
  | CONTINUE -> "continue" 
+ | IMPORT -> "import"
  | DEF -> "def" 
  | ARROW -> "->" 
  | COLON -> ":" 
+ | DOT -> "."
  | PRINT -> "print" 
+ | TYPE -> "type"
  | RANGE -> "range" 
  | PASS -> "pass" 
  | ASSERT -> "asserT" 
@@ -55,6 +59,8 @@ let string_of_token (t:token) =
  | INT -> "int" 
  | FLOAT -> "float" 
  | STRING -> "string"
+ | ARR -> "list"
+ | CLASS -> "class"
  | VARIABLE(s) -> s
  | BOOL_LITERAL(b) -> string_of_bool b
  | INT_LITERAL(i) -> string_of_int i

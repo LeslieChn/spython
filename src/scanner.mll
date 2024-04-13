@@ -61,13 +61,17 @@ rule token = parse
   | "elif"   { ELIF }
   | "while"  { WHILE }
   | "for"    { FOR }
+  | "in"     { IN }
   | "return" { RETURN }
   | "break"  { BREAK }
   | "continue" { CONTINUE }
+  | "import" { IMPORT }
   | "def"    { DEF }
   | "->"     { ARROW }
   | ":"      { COLON }
+  | "."      { DOT }
   | "print"  { PRINT }
+  | "type"   { TYPE }
   | "range"  { RANGE }
   | "pass"   { PASS }
   | "assert" { ASSERT }
@@ -75,6 +79,8 @@ rule token = parse
   | "int"    { INT }
   | "float"  { FLOAT }
   | "str"    { STRING }
+  | "list"   { ARR }
+  | "class"  { CLASS }
   | "true" | "false" as lem { BOOL_LITERAL(bool_of_string lem)  }
   | digit+ as lem { INT_LITERAL(int_of_string lem) }
   | cfloat as lem { FLOAT_LITERAL(float_of_string lem) }
