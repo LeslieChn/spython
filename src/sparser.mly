@@ -1,47 +1,49 @@
 %{ 
-    open Ast
+	open Ast
 %}
 
-%token SPACE TAB EOL
-%token ASSIGN PLUS MINUS TIMES DIVIDE MOD EXP PLUSEQ MINUSEQ TIMESEQ DIVIDEEQ MODEQ EXPEQ
-%token LPAREN RPAREN LBRACK RBRACK LBRACE RBRACE SEMI COMMA
-%token EQ NEQ LT LEQ GT GEQ AND OR NOT NEG
-%token IF ELSE ELIF WHILE FOR IN RETURN BREAK CONTINUE 
-%token IMPORT DEF ARROW COLON DOT PRINT TYPE RANGE PASS ASSERT
-%token BOOL INT FLOAT STRING ARR CLASS
-%token <bool> BOOL_LITERAL
-%token <int> INT_LITERAL
-%token <float> FLOAT_LITERAL
-%token <string> STRING_LITERAL
-%token <string> VARIABLE
-%token EOF
+ %token SPACE TAB EOL
+ %token ASSIGN PLUS MINUS TIMES DIVIDE MOD EXP PLUSEQ MINUSEQ TIMESEQ DIVIDEEQ MODEQ EXPEQ
+ %token LPAREN RPAREN LBRACK RBRACK LBRACE RBRACE SEMI COMMA
+ %token EQ NEQ LT LEQ GT GEQ AND OR NOT NEG NOP
+ %token IF ELSE ELIF WHILE FOR IN FUNC RETURN BREAK CONTINUE
+ %token IMPORT DEF ARROW COLON DOT PRINT TYPE RANGE PASS ASSERT
+ %token BOOL INT FLOAT STRING ARR CLASS
+ %token <bool> BOOL_LITERAL
+ %token <int> INT_LITERAL
+ %token <float> FLOAT_LITERAL
+ %token <string> STRING_LITERAL
+ %token <string> VARIABLE
+ %token INDENT DEDENT
+ %token EOF
 
 %start program
 %type <Ast.stmt list> program
 
-%nonassoc NOFIELD
+%nonassoc NOFIELD 
 %nonassoc FIELD
-
-%nonassoc NOELSE
+%nonassoc NOELSE 
 %nonassoc ELSE
 
-%right ASSIGN PLUSEQ MINUSEQ TIMESEQ DIVIDEEQ MODEQ 
+%right ASSIGN PLUSEQ MINUSEQ DIVIDEEQ TIMESEQ MODEQ
+%left DOT
 %left OR
 %left AND
 %left EQ NEQ
-%left LT LEQ GT GEQ
+%left LT GT LEQ GEQ
 %left PLUS MINUS
-%left TIMES DIVIDE MOD
+%left TIMES DIVIDE
 %right EXP EXPEQ
 %right NOT NEG
+%left SEMI
 
 %nonassoc LPAREN LBRACK LBRACE
 %nonassoc RPAREN RBRACK RBRACE
 
 %%
 
-program:
-  stmt_list EOF { List.rev $1 }
+program: stmt_list EOF { List.rev $1 }
+
 
 stmt_list:
   | { [] }
@@ -64,13 +66,15 @@ stmt:
   | lvalue MINUSEQ expr { Asn([$1], Binop($1, Sub, $3)) }
   | lvalue TIMESEQ expr { Asn([$1], Binop($1, Mul, $3)) }
   | lvalue DIVIDEEQ expr { Asn([$1], Binop($1, Div, $3)) }
+  | lvalue MODEQ expr { Asn([$1], Binop($1, Div, $3)) }
   | lvalue EXPEQ expr { Asn([$1], Binop($1, Exp, $3)) }
   | TYPE LPAREN expr RPAREN { Type($3) }
   | PRINT LPAREN expr RPAREN { Print($3) }
   | BREAK SEMI { Break }
   | CONTINUE SEMI { Continue }
   | PASS { Nop }
- 
+  | NOP { Nop }
+
 formal_asn_list:
   | lvalue { [$1] }
   | formal_asn_list ASSIGN lvalue { $3 :: $1 }
@@ -78,7 +82,7 @@ formal_asn_list:
 lvalue:
   | bind_opt { Var $1 }
   | list_access { $1 }
-  
+
 bind_opt:
   | typ VARIABLE { Bind($2, $1) }
 
@@ -86,18 +90,18 @@ list_access:
   | expr LBRACK expr RBRACK { ListAccess($1, $3) }
   | expr LBRACK expr COLON expr RBRACK { ListSlice($1, $3, $5) }
 
-stmt_block:
+stmt_block: 
   | LBRACE stmt_list RBRACE { Block(List.rev $2) }
 
 formals_opt:
   | { [] }
   | formal_list { List.rev $1 }
 
-formal_list:
+formal_list: 
   | bind_opt { [$1] }
   | formal_list COMMA bind_opt { $3 :: $1 }
 
-actuals_opt:
+actuals_opt: 
   | { [] }
   | actuals_list { List.rev $1 }
 
@@ -111,6 +115,7 @@ typ:
   | BOOL { Bool }
   | STRING { String }
   | ARR { Arr }
+  | FUNC { FuncType }
 
 expr:
   | list_access { $1 }
@@ -139,5 +144,4 @@ expr:
   | expr TIMES expr { Binop($1, Mul, $3) }
   | expr DIVIDE expr { Binop($1, Div, $3) }
   | expr EXP expr { Binop($1, Exp, $3) }
-  | expr MOD expr { Binop($1, Mod, $3) }
   | typ LPAREN expr RPAREN { Cast($1, $3) }

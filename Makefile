@@ -1,6 +1,6 @@
 .PHONY: all clean byte 
 
-OCB_FLAGS = -I src -use-menhir -lib unix -menhir "menhir --unused-tokens --unused-precedence-levels"
+OCB_FLAGS = -tag bin_annot -use-ocamlfind -I src -use-menhir -menhir "menhir --unused-tokens --unused-precedence-levels"
 OCB = ocamlbuild $(OCB_FLAGS)
 
 all: clean native

@@ -43,7 +43,6 @@ type stmt =
   | Break
   | Nop
 
-
 let rec string_of_op = function
   | Add -> "+"
   | Sub -> "-"
@@ -70,12 +69,14 @@ let rec string_of_lit = function
   | BoolLit(b) -> string_of_bool b
   | FloatLit(f) -> string_of_float f
   | StringLit(s) -> s
+
 let rec string_of_typ = function
   | Int -> "int"
   | Float -> "float"
   | Bool -> "bool"
   | String -> "str"
   | Arr -> "list"
+  | Dyn -> "dyn"
   | FuncType -> "func"
   | Void -> "void"
   | Object -> "object"
