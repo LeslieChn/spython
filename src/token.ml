@@ -67,3 +67,7 @@ let string_of_token (t:token) =
  | FLOAT_LITERAL(f) -> string_of_float f
  | STRING_LITERAL(s) ->  "\"" ^ s ^ "\""
  | EOF -> ""
+ | NOP -> "nop"
+ | INDENT -> "indent"
+ | DEDENT -> "dedent"
+ | FUNC -> "func"
