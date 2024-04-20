@@ -43,6 +43,7 @@ type stmt =
   | Break
   | Nop
 
+(* pretty print *)
 let rec string_of_op = function
   | Add -> "+"
   | Sub -> "-"
@@ -110,7 +111,7 @@ let rec string_of_stmt = function
   | Class(str, s) -> "class " ^ str ^ ":\n" ^ string_of_stmt s
   | Asn(el, e) -> String.concat ", " (List.map string_of_expr el) ^ " = "  ^ string_of_expr e 
   | Type(e) -> string_of_expr e
-  | Print(e) -> string_of_expr e
+  | Print(e) -> "print(" ^ string_of_expr e ^ ")"
   | Import(e) -> "import " ^ e
   | Nop -> ""
   | Continue -> "continue"

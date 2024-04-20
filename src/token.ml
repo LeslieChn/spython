@@ -38,6 +38,7 @@ let string_of_token (t:token) =
  | NEG -> "-"
  | IF -> "if" 
  | ELSE -> "else" 
+ | NOELSE -> "$noelse" 
  | ELIF -> "elif" 
  | WHILE -> "while" 
  | FOR -> "for" 
@@ -60,7 +61,6 @@ let string_of_token (t:token) =
  | FLOAT -> "float" 
  | STRING -> "string"
  | ARR -> "list"
- | CLASS -> "class"
  | VARIABLE(s) -> s
  | BOOL_LITERAL(b) -> string_of_bool b
  | INT_LITERAL(i) -> string_of_int i
@@ -71,3 +71,4 @@ let string_of_token (t:token) =
  | INDENT -> "indent"
  | DEDENT -> "dedent"
  | FUNC -> "func"
+ | CLASS -> "class"

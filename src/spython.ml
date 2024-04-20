@@ -1,31 +1,29 @@
 open Printf
 open Sparser
+open Utilities
 
-(*let _ =
-  let lexbuf = Lexing.from_channel stdin in
-   let token_list = Util.get_token_list lexbuf in
-   let stat_list = Util.split_by_line token_list in
-   List.iter (fun x -> Util.print_token_list x) stat_list
-*)
-let _ =
-    let lexbuf = Lexing.from_channel stdin in
-    (*let token_list = Util.get_token_list lexbuf in
-    let stat_list = Util.split_by_line token_list in
-    let counted_list = Util.get_indent_width stat_list in
-    let indented_list = List.flatten (Util.indent_to_scope counted_list) in
-    let ll = Util.create_lexbuf indented_list in *)
-    (*Printf.printf "saperated list: %d\n" (List.length (List.flatten(Util.indent_to_scope counted_list)));*)
-    (*Util.print_token_list indented_list*)
-    (* List.iter (fun x -> Util.print_token_list x) indented_list*)
-    let program = 
-        try 
-          Sparser.program Scanner.token (Util.prepare_lexbuf lexbuf)
-        with
-        | Scanner.Error(c) -> 
-                fprintf stderr "Scanner error at line %d: Unknow char '%c'.\n"
-                lexbuf.lex_curr_p.pos_lnum c; exit 1
-        | Sparser.Error -> 
-                fprintf stderr "Sparser error at line %d.\n"
-                lexbuf.lex_curr_p.pos_lnum; exit 1
-    in 
-    print_endline (Ast.string_of_program program)
+type action = Ast | Sast | LLVM_IR | Compile
+
+let () =
+  let action = ref Compile in
+  let output = ref "a.out" in
+  let set_action a () = action := a in
+  let speclist = [
+    ("-o", Arg.Set_string output, "Set output file");
+    ("-a", Arg.Unit (set_action Ast), "Print the AST");
+    ("-s", Arg.Unit (set_action Sast), "Print the SAST");
+    ("-l", Arg.Unit (set_action LLVM_IR), "Print the generated LLVM IR");
+    ("-c", Arg.Unit (set_action Compile),
+      "Check and print the generated LLVM IR (default)");
+  ] in
+  let usage_msg = "usage: ./spython [-a|-s|-l|-c] <file.mc> [-o] <output>" in
+  let channel = ref stdin in
+  Arg.parse speclist (fun filename -> channel := open_in filename) usage_msg;
+
+  let lexbuf = Lexing.from_channel !channel in
+  let ast = Sparser.program Scanner.token (Prep.prepare_lexbuf lexbuf) in
+  match !action with
+    Ast -> print_string (Ast.string_of_program ast)
+    | Sast    -> Printf.printf "sast\n"
+    | LLVM_IR -> Printf.printf "LLVM\n"
+    | Compile -> Printf.printf "Compile\n"

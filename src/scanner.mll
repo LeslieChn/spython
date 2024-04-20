@@ -59,6 +59,7 @@ rule token = parse
   | "not"    { NOT }
   | "if"     { IF }
   | "else"   { ELSE }
+  | "$noelse" { NOELSE }
   | "elif"   { ELIF }
   | "while"  { WHILE }
   | "for"    { FOR }
