@@ -21,9 +21,9 @@ type expr =
   | Method of expr * string * expr list
   | Field of expr * string
   | List of expr list
-  | ListAccess of expr * expr (* expr, entry *)
-  | ListSlice of expr * expr * expr (* expr, left, right *)
-  | Cast of typ * expr (* type casting *)
+  | ListAccess of expr * expr
+  | ListSlice of expr * expr * expr
+  | Cast of typ * expr
 
 type stmt =
   | Func of bind * bind list * stmt
@@ -77,14 +77,14 @@ let rec string_of_typ = function
   | Bool -> "bool"
   | String -> "str"
   | Arr -> "list"
-  | Dyn -> "dyn"
+  | Dyn -> ""
   | FuncType -> "func"
   | Void -> "void"
   | Object -> "object"
   | Null -> "null"
 
 let rec string_of_bind = function
-  | Bind(s, t) -> s ^ ": " ^ string_of_typ t
+  | Bind(s, t) -> string_of_typ t ^ " " ^ s
 
 let rec string_of_expr = function
   | Binop(e1, o, e2) -> string_of_expr e1 ^ " " ^ string_of_op o ^ " " ^ string_of_expr e2

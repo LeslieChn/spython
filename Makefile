@@ -9,6 +9,9 @@ clean:
 	$(OCB) -clean
 	rm -f a.out main *.ll *.s *out *.log *.diff spython
 
+test: native
+	./testall.sh
+
 native:
 	$(OCB) spython.native
 	mv spython.native spython
