@@ -31,8 +31,6 @@ let () =
       | [] -> Sparser.EOF
       | ht :: tl -> prep_token := tl; ht in
   let ast = Sparser.program token (Lexing.from_string "") in
-  match !action with
-    | Ast -> print_string (Ast.string_of_program ast)
-    | Sast    -> Printf.printf "sast\n"
-    | LLVM_IR -> Printf.printf "LLVM\n"
-    | Compile -> Printf.printf "Compile\n"
+  let program = Util.strip_after [] ast in
+  let (sast, map') = (Semant.check [] [] { forloop = false; inclass = false; cond = false; noeval =  false; stack = TypeMap.empty; func = false; locals = StringMap.empty; globals = StringMap.empty; } program)
+  in Printf.printf "hi\n"

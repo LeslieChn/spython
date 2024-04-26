@@ -255,7 +255,7 @@ globals and locals are the globals and locals maps (locals contains all globals)
 out is a sstmt list containing the semanting checked stmts.
 data is a (typ, e', sstmt) tuple containing return information for the function.
 local_vars is a list of sbinds containing the local variables.
-stack is a TypeMap.containing the function call stack.
+stack is a TypeMap containing the function call stack.
 
 TODO distinguish between outer and inner scope return statements to stop evaluating when definitely
 returned. *)
@@ -451,5 +451,5 @@ and stmt the_state = function (* evaluates statements, can pass it a func *)
 statements and returning a list of sstmts, a list of globals, and the updated map *)
 
 and check sast_out globals_out the_state = function
-  | [] -> ((List.rev sast_out, List.sort_uniq Stdlib.compare (List.rev (globals_out @ !possible_globals))), the_state.locals)
+  | [] -> ((List.rev sast_out, List.sort_uniq Pervasives.compare (List.rev (globals_out @ !possible_globals))), the_state.locals)
   | a :: t -> let (m', statement, data, binds) = stmt the_state a in check (statement :: sast_out) (binds @ globals_out) (change_state the_state (S_setmaps (m', m'))) t

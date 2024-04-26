@@ -97,7 +97,6 @@ let indent_to_scope (counted_lst: (int * token list) list) =
 
 (* integrate functions above: lexbuf -> indent_to_scope lexbuf*)
 let prepare_token lexbuf = get_token_list lexbuf |> split_by_line |> get_indent_width |> indent_to_scope |> List.flatten |> List.filter (fun x -> x != SPACE)
-let prepare_lexbuf token =  prepare_token token |> create_lexbuf
 
 let print_token_list lst =
   List.iter (fun x -> Printf.printf "%s " (string_of_token x)) lst;
