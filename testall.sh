@@ -80,8 +80,8 @@ RunFail() {
 CheckLLVM() {
     error=0
     basename=`echo $1 | sed 's/.*\\///
-                             s/.cl//'`
-    reffile=`echo $1 | sed 's/.cl$//'`
+                             s/.spy//'`
+    reffile=`echo $1 | sed 's/.spy$//'`
     basedir="`echo $1 | sed 's/\/[^\/]*$//'`/."
 
     echo -n "$basename..."
@@ -113,8 +113,8 @@ CheckLLVM() {
 CheckSemant() {
     error=0
     basename=`echo $1 | sed 's/.*\\///
-                             s/.cl//'`
-    reffile=`echo $1 | sed 's/.cl$//'`
+                             s/.spy//'`
+    reffile=`echo $1 | sed 's/.spy$//'`
     basedir="`echo $1 | sed 's/\/[^\/]*$//'`/."
 
     echo -n "$basename..."

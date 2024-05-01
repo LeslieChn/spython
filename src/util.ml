@@ -171,6 +171,7 @@ let is_var = function
 (* is_arr checks if a given type is an array type. Strings are currently treated as arrays *)
 let is_arr = function
   | Arr -> true
+  | Arr_var -> true
   | String -> true
   | _ -> false
 

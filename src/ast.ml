@@ -8,7 +8,7 @@ type literal =
   | FloatLit of float
   | StringLit of string
 
-type typ = Int | Float | Bool | String | Dyn | Arr | Object | FuncType | Null
+type typ = Int | Float | Bool | String | Dyn | Arr | Object | FuncType | Null | Arr_var 
 
 type bind = Bind of string * typ
 

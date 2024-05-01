@@ -28,37 +28,23 @@ let search_env_opt env name =
             | None -> if Sys.file_exists name then Some name else None
             | Some path -> Some (Filename.concat path name)
 
-let rec strip_after_stmt = function 
-  | If(a, b, c) -> If(a, strip_after_stmt b, strip_after_stmt c)
-  | While(a, b) -> While(a, strip_after_stmt b)
-  | For(a, b, c) -> For(a, b, strip_after_stmt c)
-  | Range(a, b, c) -> Range(a, b, strip_after_stmt c)
-  | Block(x) -> Block(strip_after [] x)
-  | Func(a, b, c) -> Func(a, b, strip_after_stmt c)
-  | _ as x -> x
-and strip_after out = function
-  | [] -> List.rev out
-  | Return e :: t -> List.rev ((strip_after_stmt (Return e)) :: out)
-  | Continue :: t -> List.rev ((strip_after_stmt Continue) :: out)
-  | Break :: t -> List.rev ((strip_after_stmt Break) :: out)
-  | a :: t -> strip_after ((strip_after_stmt a) :: out) t
+let get_ast path = 
+  let chan = open_in path in
+  let lexbuf = Lexing.from_channel chan in
+   let prep_token = ref (Prep.prepare_token lexbuf) in
+   let prep_lexbuf = Prep.create_lexbuf !prep_token in
+   let token prep_lexbuf =
+       match !prep_token with
+       | [] -> Parser.EOF
+       | ht :: tl -> prep_token := tl; ht in
+  let program = Parser.program token (Lexing.from_string "") in program
 
-let pre_process fname = 
+let ast_from_path fname = 
   let path = search_env_opt "PATH" fname in
   let name = match path with
     | None -> raise (Failure ("FileNotFoundError: unable to open file " ^ fname)) 
-    | Some x -> x in
-  let get_ast path = 
-    let input = open_in path in
-    let lexbuf = Lexing.from_channel input in
-     let prep_token = ref (Prep.prepare_token lexbuf) in
-     let prep_lexbuf = Prep.create_lexbuf !prep_token in
-     let token prep_lexbuf =
-         match !prep_token with
-         | [] -> Parser.EOF
-         | ht :: tl -> prep_token := tl; ht in
-    let program = Parser.program token (Lexing.from_string "") in program
-  in strip_after [] (get_ast name)
+    | Some x -> x
+  in get_ast name
 
 let process_output_to_list = fun command -> 
   let chan = Unix.open_process_in command in
@@ -73,6 +59,22 @@ let process_output_to_list = fun command ->
 
 let cmd_to_list command =
   let (l, _) = process_output_to_list command in l
+
+let rec strip_after_stmt = function 
+  | If(a, b, c) -> If(a, strip_after_stmt b, strip_after_stmt c)
+  | While(a, b) -> While(a, strip_after_stmt b)
+  | For(a, b, c) -> For(a, b, strip_after_stmt c)
+  | Range(a, b, c) -> Range(a, b, strip_after_stmt c)
+  | Block(x) -> Block(strip_after [] x)
+  | Func(a, b, c) -> Func(a, b, strip_after_stmt c)
+  | _ as x -> x
+
+and strip_after out = function
+  | [] -> List.rev out
+  | Return e :: t -> List.rev ((strip_after_stmt (Return e)) :: out)
+  | Continue :: t -> List.rev ((strip_after_stmt Continue) :: out)
+  | Break :: t -> List.rev ((strip_after_stmt Break) :: out)
+  | a :: t -> strip_after ((strip_after_stmt a) :: out) t
 
 let rec sstmt_iterator = function 
   | SIf(a, b, c) -> SIf(strip_return_expr a, sstmt_iterator b, sstmt_iterator c)
@@ -89,6 +91,7 @@ let rec sstmt_iterator = function
   | SStage(a, b, c) -> SStage(sstmt_iterator a, sstmt_iterator b, sstmt_iterator c)
   | SType(e) -> let (e', typ) = e in print_endline (string_of_typ typ); let _ = strip_return_expr e in SNop
   | _ as x -> x
+
 and strip_return_expr sexpr = let (e, t) = sexpr in 
   let e' = (match e with
   | SCall(e, el, s) -> SCall(e, el, sstmt_iterator s)
@@ -119,8 +122,9 @@ let codegen sast fname =
 let run map fname =
   try
     let original_path = Sys.getcwd () in
-    let program = Sys.chdir (Filename.dirname fname); pre_process (Filename.basename fname) in
-    let (sast, map') = (Semant.check [] [] { forloop = false; inclass = false; cond = false; noeval = false; stack = TypeMap.empty; func = false; globals = map; locals = map; } program) in
+    let program = Sys.chdir (Filename.dirname fname); ast_from_path (Filename.basename fname) in
+    let after_program = strip_after [] program in
+    let (sast, map') = (Semant.check [] [] { forloop = false; inclass = false; cond = false; noeval = false; stack = TypeMap.empty; func = false; globals = map; locals = map; } after_program) in
     let (sast, globals) = sast in
     let sast = (strip_return [] sast, globals) in 
     let _ = Sys.chdir original_path in
@@ -128,7 +132,8 @@ let run map fname =
     List.iter print_endline output; flush stdout;
   with
     | Parsing.Parse_error -> Printf.printf "ParseError: invalid syntax!\n"; flush stdout
-    | _ -> Printf.printf "Unknown error!\n"; flush stdout
+    | Failure explanation -> Printf.printf "%s!!\n" explanation; flush stdout
+    | _ -> Printf.printf "NotFoundError: unknown error!\n"; flush stdout
 
 let _ =
   Arg.parse speclist (fun path -> fpath := path) usage_msg;

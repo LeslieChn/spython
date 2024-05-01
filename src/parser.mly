@@ -85,6 +85,7 @@ lvalue:
 bind_opt:
   | VARIABLE { Bind($1, Dyn) }
   | typ VARIABLE { Bind($2, $1) }
+  | typ VARIABLE LBRACK RBRACK { Bind($2, $1) }
 
 list_access:
   | expr LBRACK expr RBRACK { ListAccess($1, $3) }
