@@ -1,4 +1,4 @@
-open Sparser
+open Parser
 
 let string_of_token (t:token) = 
  match t with
@@ -10,13 +10,11 @@ let string_of_token (t:token) =
  | MINUS -> "-" 
  | TIMES -> "*" 
  | DIVIDE -> "/" 
- | MOD -> "%" 
  | EXP -> "**" 
  | PLUSEQ -> "+=" 
  | MINUSEQ -> "-=" 
  | TIMESEQ -> "*=" 
  | DIVIDEEQ -> "/=" 
- | MODEQ -> "%=" 
  | EXPEQ -> "**=" 
  | LPAREN -> "(" 
  | RPAREN -> ")" 
@@ -38,8 +36,6 @@ let string_of_token (t:token) =
  | NEG -> "-"
  | IF -> "if" 
  | ELSE -> "else" 
- | NOELSE -> "$noelse" 
- | ELIF -> "elif" 
  | WHILE -> "while" 
  | FOR -> "for" 
  | IN -> "in"
@@ -55,20 +51,19 @@ let string_of_token (t:token) =
  | TYPE -> "type"
  | RANGE -> "range" 
  | PASS -> "pass" 
- | ASSERT -> "asserT" 
  | BOOL -> "bool" 
  | INT -> "int" 
  | FLOAT -> "float" 
  | STRING -> "string"
  | ARR -> "list"
+ | CLASS -> "class"
  | VARIABLE(s) -> s
  | BOOL_LITERAL(b) -> string_of_bool b
  | INT_LITERAL(i) -> string_of_int i
  | FLOAT_LITERAL(f) -> string_of_float f
  | STRING_LITERAL(s) ->  "\"" ^ s ^ "\""
- | EOF -> ""
+ | EOF -> "$$$$EOF"
  | NOP -> "nop"
  | INDENT -> "indent"
  | DEDENT -> "dedent"
  | FUNC -> "func"
- | CLASS -> "class"

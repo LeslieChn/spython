@@ -1,4 +1,4 @@
-type operator = Add | Sub | Mul | Div | Exp | Mod | Eq | Neq | Less | Leq | Greater | Geq | And | Or | ListAccess
+type operator = Add | Sub | Mul | Div | Exp | Eq | Neq | Less | Leq | Greater | Geq | And | Or | ListAccess
 
 type uop = Neg | Not
 
@@ -8,7 +8,7 @@ type literal =
   | FloatLit of float
   | StringLit of string
 
-type typ = Int | Float | Bool | String | Arr | Object | Void | Null | FuncType | Dyn
+type typ = Int | Float | Bool | String | Dyn | Arr | Object | FuncType | Null
 
 type bind = Bind of string * typ
 
@@ -23,7 +23,7 @@ type expr =
   | List of expr list
   | ListAccess of expr * expr
   | ListSlice of expr * expr * expr
-  | Cast of typ * expr
+  | Cast of typ * expr 
 
 type stmt =
   | Func of bind * bind list * stmt
@@ -50,7 +50,6 @@ let rec string_of_op = function
   | Mul -> "*"
   | Div -> "/"
   | Exp -> "**"
-  | Mod -> "%"
   | Eq -> "=="
   | Neq -> "!="
   | Less -> "<"
@@ -76,20 +75,19 @@ let rec string_of_typ = function
   | Float -> "float"
   | Bool -> "bool"
   | String -> "str"
+  | Dyn -> "dyn"
   | Arr -> "list"
-  | Dyn -> ""
   | FuncType -> "func"
-  | Void -> "void"
   | Object -> "object"
   | Null -> "null"
 
 let rec string_of_bind = function
-  | Bind(s, t) -> string_of_typ t ^ " " ^ s
+  | Bind(s, t) -> string_of_typ t ^ s
 
 let rec string_of_expr = function
   | Binop(e1, o, e2) -> string_of_expr e1 ^ " " ^ string_of_op o ^ " " ^ string_of_expr e2
   | Lit(l) -> string_of_lit l
-  | Var(b) -> string_of_bind b 
+  | Var(b) -> string_of_bind b
   | Unop(o, e) -> string_of_uop o ^ string_of_expr e
   | Call(e, el) -> string_of_expr e ^ "(" ^ String.concat ", " (List.map string_of_expr el) ^ ")"
   | Method(obj, m, el) -> string_of_expr obj ^ "." ^ m ^ "(" ^ String.concat ", " (List.map string_of_expr el) ^ ")"
@@ -109,9 +107,9 @@ let rec string_of_stmt = function
   | While(e, s) -> "while " ^ string_of_expr e ^ ":\n" ^ string_of_stmt s
   | Return(e) -> "return " ^ string_of_expr e ^ "\n"
   | Class(str, s) -> "class " ^ str ^ ":\n" ^ string_of_stmt s
-  | Asn(el, e) -> String.concat ", " (List.map string_of_expr el) ^ " = "  ^ string_of_expr e 
+  | Asn(el, e) -> String.concat ", " (List.map string_of_expr el) ^ " = "  ^ string_of_expr e
   | Type(e) -> string_of_expr e
-  | Print(e) -> "print(" ^ string_of_expr e ^ ")"
+  | Print(e) -> string_of_expr e
   | Import(e) -> "import " ^ e
   | Nop -> ""
   | Continue -> "continue"

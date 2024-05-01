@@ -1,0 +1,6 @@
+# credit to https://stackoverflow.com/questions/50549127/compiling-ocaml-with-module-llvm-analysi
+# Include the llvm and llvm.analysis packages while compiling
+true: package(llvm), package(llvm.analysis)
+
+# Enable almost all compiler warnings
+true : warn(-8-26-11)

@@ -1,17 +1,18 @@
-.PHONY: all clean byte 
+.PHONY: all clean byte native fn
 
-OCB_FLAGS = -tag bin_annot -use-ocamlfind -I src -use-menhir -menhir "menhir --unused-tokens --unused-precedence-levels" -pkg menhirLib
+OCB_FLAGS = -I src -lib unix -use-ocamlfind
+
 OCB = ocamlbuild $(OCB_FLAGS)
 
-all: clean native
+all: clean native 
 
-clean: 
+clean:
 	$(OCB) -clean
-	rm -f a.out main *.ll *.s *out *.log *.diff spython
-
-test: native
-	./testall.sh
+	rm -f a.out main *.ll *.s *.out *.log *.diff spython
 
 native:
 	$(OCB) spython.native
-	mv spython.native spython
+	mv spython.native spython 
+
+test: native
+	./testall.sh

@@ -42,7 +42,6 @@
 
 %%
 
-
 program: stmt_list EOF { List.rev $1 }
 
 stmt_list:
@@ -54,11 +53,11 @@ stmt:
   | stmt SEMI { $1 }
   | IMPORT VARIABLE SEMI { Import($2) }
   | CLASS VARIABLE COLON SEMI stmt_block { Class($2, $5) }
-  | DEF VARIABLE LPAREN formals_opt RPAREN COLON SEMI stmt_block { Func(Bind($2, Dyn), $4, $8) }
+  | DEF VARIABLE LPAREN formals_opt RPAREN COLON SEMI stmt_block { raise(Failure(Printf.sprintf "TypeError: function '%s' needs explicit type" $2))}
   | DEF VARIABLE LPAREN formals_opt RPAREN ARROW typ COLON SEMI stmt_block { Func(Bind($2, $7), $4, $10) }
   | RETURN expr SEMI { Return $2 }
   | IF expr COLON SEMI stmt_block %prec NOELSE { If($2, $5, Block([])) }
-  | IF expr COLON SEMI stmt_block ELSE COLON SEMI stmt_block { If($2, $5, $9) } /* to do figure out (Block) */
+  | IF expr COLON SEMI stmt_block ELSE COLON SEMI stmt_block { If($2, $5, $9) }
   | FOR bind_opt IN expr COLON SEMI stmt_block { For($2, $4, $7) }
   | FOR bind_opt IN RANGE LPAREN expr RPAREN COLON SEMI stmt_block { Range($2, $6, $10) }
   | WHILE expr COLON SEMI stmt_block { While($2, $5) }
@@ -117,7 +116,6 @@ typ:
   | STRING { String }
   | ARR { Arr }
   | FUNC { FuncType }
-
 
 expr:
 | list_access { $1 }

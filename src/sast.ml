@@ -11,34 +11,34 @@ and sfunc_decl = {
 }
 
 and sexp =
-  | SBinop of sexpr * operator * sexpr (* (left sexpr, op, right sexpr) *)
-  | SLit of literal (* literal *)
-  | SVar of string (* see above *)
-  | SUnop of uop * sexpr (* (uop, sexpr ) *)
-  | SCall of sexpr * sexpr list * sstmt (* SVar or SCall, list of args, SFunc) *) (* sstmt is SNop if recursive call within function or weak function *)
-  | SMethod of sexpr * string * sexpr list (* not implemented *)
-  | SField of sexpr * string (* not implemented *)
-  | SList of sexpr list * typ (* (list of expressions, inferred type) *)
-  | SNoexpr (* no expression *)
-  | SListAccess of sexpr * sexpr (* not implemented *)
-  | SListSlice of sexpr * sexpr * sexpr (* not implemented *)
-  | SCast of typ * typ * sexpr (* from type, to type, expr *)
+  | SBinop of sexpr * operator * sexpr 
+  | SLit of literal 
+  | SVar of string 
+  | SUnop of uop * sexpr 
+  | SCall of sexpr * sexpr list * sstmt 
+  | SMethod of sexpr * string * sexpr list 
+  | SField of sexpr * string 
+  | SList of sexpr list * typ 
+  | SNoexpr 
+  | SListAccess of sexpr * sexpr 
+  | SListSlice of sexpr * sexpr * sexpr 
+  | SCast of typ * typ * sexpr 
 
 and sexpr = sexp * typ
 
-and sstmt = (* this can be refactored using Blocks, but I haven't quite figured it out yet *)
-  | SFunc of sfunc_decl (* (name, return type), list of formals, list of locals, body) *)
-  | SBlock of sstmt list (* block found in function body or for/else/if/while loop *)
-  | SExpr of sexpr (* see above *)
-  | SIf of sexpr * sstmt * sstmt (* condition, if, else *)
-  | SFor of bind * sexpr * sstmt (* (variable, list, body (block)) *)
-  | SWhile of sexpr * sstmt (* (condition, body (block)) *)
+and sstmt = 
+  | SFunc of sfunc_decl 
+  | SBlock of sstmt list 
+  | SExpr of sexpr 
+  | SIf of sexpr * sstmt * sstmt 
+  | SFor of bind * sexpr * sstmt 
+  | SWhile of sexpr * sstmt 
   | SRange of bind * sexpr * sstmt
-  | SReturn of sexpr (* return statement *)
-  | SClass of string * sstmt (* not implemented *)
-  | SAsn of lvalue list * sexpr (* x : int = sexpr, (Bind(x, int), sexpr) *)
+  | SReturn of sexpr 
+  | SClass of string * sstmt 
+  | SAsn of lvalue list * sexpr 
   | STransform of string * typ * typ 
-  | SStage of sstmt * sstmt * sstmt (* entry, body, exit *)
+  | SStage of sstmt * sstmt * sstmt 
   | SPrint of sexpr
   | SType of sexpr
   | SContinue
@@ -50,7 +50,6 @@ and lvalue =
   | SLListAccess of sexpr * sexpr
   | SLListSlice of sexpr * sexpr * sexpr
 
-(* pretty print *)
 let concat_end delim = List.fold_left (fun a c -> a ^ delim ^ c) ""
 let append_list v = List.map (fun c -> c ^ v)
 
@@ -87,7 +86,6 @@ and string_of_sstmt depth = function
   | STransform(s, t1, t2) -> "transform " ^ s ^ ": " ^ string_of_typ t1 ^ " -> " ^ string_of_typ t2
   | SStage(s1, s2, s3) -> "entry: " ^ string_of_sstmt depth s1 ^ " body: " ^ string_of_sstmt depth s2 ^ " exit: " ^ string_of_sstmt depth s3
   | SPrint(e) -> "print(" ^ string_of_sexpr e ^ ")"
-  | SType(e) -> string_of_sexpr e
   | SBreak -> "break"
   | SContinue -> "continue"
   | SNop -> ""

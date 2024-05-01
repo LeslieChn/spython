@@ -1,6 +1,6 @@
 open Printf
 open Token
-open Sparser
+open Parser
 
 (* turn Lexing tokens into Parser.token list*)
 let get_token_list lexbuf = 
@@ -101,3 +101,4 @@ let prepare_token lexbuf = get_token_list lexbuf |> split_by_line |> get_indent_
 let print_token_list lst =
   List.iter (fun x -> Printf.printf "%s " (string_of_token x)) lst;
   print_endline "end of print_token_list"
+
