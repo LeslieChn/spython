@@ -32,7 +32,6 @@ and then run:
 docker run -v $PWD:/plt2024 spython
 ```
 
-
 ## <a name="test"></a> Test and Run
 ```console
 make test
@@ -40,4 +39,3 @@ make test
 ```console
 ./testall.sh
 ```
-
