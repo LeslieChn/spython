@@ -2,4 +2,5 @@
 ''' This is also a comment,
     in multiple lines.
 '''
-int a = 11
+int a = 2
+print (a)
