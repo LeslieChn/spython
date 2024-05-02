@@ -23,14 +23,16 @@ print(gcd (1234342213, 334232))
 
 Install Docker on whatever operating system, see [Get Docker](https://docs.docker.com/get-docker/) for more information.
 
-For PLT2024 graders, you may load the Docker image by:
+For PLT2024 graders, you may load the docker image by:
 ```console
 docker load -i spython-docker.tar
 ```
+
 or build the docker image may take a minute or two:
 ```console
 docker build -t spython .
 ```
+
 once the image is ready, run it to enter the container:
 ```console
 docker run -v $PWD:/plt2024 -it spython
