@@ -6,7 +6,7 @@ S-Python is an educational tool that introduces the concepts of static typing an
 # Contents
 * [Examples](#Examples)
 * [Installation](#Installation)
-* [Test and Run](#Test and run)
+* [Test and Run](#Test)
 
 # Examples
 ```py
