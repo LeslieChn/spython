@@ -29,7 +29,7 @@ docker build -t spython .
 ```
 and then run:
 ```console
-docker run -v $PWD:/plt2024 spython
+docker run -v $PWD:/plt2024 -it spython
 ```
 
 ## <a name="test"></a> Test and Run
