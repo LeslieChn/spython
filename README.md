@@ -5,8 +5,8 @@ S-Python is an educational tool that introduces the concepts of static typing an
 
 # Contents
 * [Examples](#Examples)
-* [Installation](#Install)
-* [Test and Run](#Test)
+* [Installation](#Installation)
+* [Test and Run](#Test and run)
 
 # Examples
 ```py
@@ -19,7 +19,7 @@ def gcd(int a, int b)->int:
     return a
 print(gcd (1234342213, 334232))
 ```
-# Install
+# Installation
 
 Install Docker on whatever operating system you're on
 Under Ubuntu,
@@ -40,8 +40,7 @@ Under Ubuntu,
 
 # Test and run
 ```console
-foo@bar:~$ whoami
-foo
+make test
 ```
 ```console
 ./testall.sh
