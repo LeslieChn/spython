@@ -4,11 +4,11 @@
 S-Python is an educational tool that introduces the concepts of static typing and compiling to young learners within the Python programming language.
 
 # Contents
-* [Examples](#Examples)
-* [Installation](#Installation)
-* [Test and Run](#Test)
+* [Examples](#ex)
+* [Installation](#install)
+* [Test and Run](#test)
 
-# Examples
+# <a name="ex"></a> Examples
 ```py
 def gcd(int a, int b)->int:
     while (a != b):
@@ -19,11 +19,11 @@ def gcd(int a, int b)->int:
     return a
 print(gcd (1234342213, 334232))
 ```
-# Installation
+# <a name="install"></a> Installation
 
 Install Docker on whatever operating system 
 
-# Test and run
+# <a name="test"></a> Test and Run
 ```console
 make test
 ```
