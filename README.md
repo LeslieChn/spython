@@ -21,22 +21,7 @@ print(gcd (1234342213, 334232))
 ```
 # Installation
 
-Install Docker on whatever operating system you're on
-Under Ubuntu,
-   apt install docker.io
-
-   You'll likely need to add yourself to the "docker" group:
-  
-   sudo usermod -aG docker <username>
-
-   Log out and back in for this to take effect.  Run "groups" to
-   make sure you're part of the "docker" group.
-
-* Test your installation
-
-   docker run hello-world
-
-  If this fails, you will need to correct your installation.
+Install Docker on whatever operating system 
 
 # Test and run
 ```console
