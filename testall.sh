@@ -172,5 +172,5 @@ do
 	    ;;
     esac
 done
-
+rm a.out
 exit $globalerror
