@@ -1,0 +1,10 @@
+if true:
+	print(1)
+if true == false:
+	print(0)
+int x = 3
+if x == 3:
+	print(1)
+if x != 3:
+	print(0)
+

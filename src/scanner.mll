@@ -81,6 +81,7 @@ rule token = parse
  | "int"    { INT }
  | "float"  { FLOAT }
  | "str"    { STRING }
+ | "char"    { STRING }
  | "list"   { ARR }
  | "class"  { CLASS }
  | "true" | "false" as lem { BOOL_LITERAL(bool_of_string lem)  }

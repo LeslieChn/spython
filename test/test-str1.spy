@@ -1,0 +1,4 @@
+str l = "plt"
+char a = l[2]
+
+print(a)

@@ -1,0 +1,3 @@
+int x = 3
+int y = 60 
+print (x + y + 6)
