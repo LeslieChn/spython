@@ -1,0 +1,11 @@
+def foo(  int x)->int:          
+    return x
+
+for int i in range(20):
+        print(i)                
+
+for int i in range(20):
+  if i == 5:
+    print(i)
+  else:
+    print(i + 5)

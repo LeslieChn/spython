@@ -1,0 +1,4 @@
+if false:
+	int x = 3
+
+print(x)

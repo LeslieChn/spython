@@ -1,0 +1,2 @@
+for char i in "plt2024":
+    print(i)

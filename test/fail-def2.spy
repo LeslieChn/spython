@@ -1,0 +1,7 @@
+if false:
+    def foo()->int:
+        return x
+
+int x = 3
+print(x)
+print(foo())

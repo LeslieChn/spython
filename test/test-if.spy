@@ -1,0 +1,10 @@
+int x = 3
+int b[] = [1,2,3]
+
+if x == 3:
+	print(b[0])
+
+print(b[1])
+
+int c = -b[2]
+print (c)

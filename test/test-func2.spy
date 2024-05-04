@@ -1,0 +1,4 @@
+def foo(int x)->int:
+	return x
+
+print(3)

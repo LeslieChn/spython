@@ -1,0 +1,7 @@
+def reverse(str x)-> str:
+    str out = ""
+    for char i in x:
+        out = i + out
+    return out
+
+print(reverse("hello"))

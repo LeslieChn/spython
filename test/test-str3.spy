@@ -1,0 +1,2 @@
+str x = "remember plt 2024"
+print(x)

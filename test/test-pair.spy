@@ -1,0 +1,4 @@
+def fst(int a,int b)->int:
+	return a
+
+print(fst(4,5))

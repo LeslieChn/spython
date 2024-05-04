@@ -1,0 +1,9 @@
+str x = "hey "
+
+str out = ""
+for char i in x:
+    out += i
+
+out += "bro"
+
+print(out)

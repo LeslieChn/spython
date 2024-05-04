@@ -1,0 +1,8 @@
+int x = 3
+
+def foo(int x)->int:
+  print(x)
+  return x
+
+print(foo(4))
+print(x)

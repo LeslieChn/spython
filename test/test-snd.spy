@@ -1,0 +1,7 @@
+if true:
+	def snd(int a,int b)->int:
+		return b
+
+print(snd(1,2))
+#SWarning: called unknown/undefined function
+#2
