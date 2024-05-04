@@ -1,0 +1,11 @@
+float x = 2.0
+int b = 4
+
+if x != 7.3:
+	b = 3
+
+print(4)
+
+int a = 1 + b
+
+print(7)

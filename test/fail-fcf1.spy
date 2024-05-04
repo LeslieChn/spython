@@ -1,0 +1,10 @@
+if true:
+	def foo()->int:
+		return x
+else:
+	def bar()->int:
+		return x + 1
+
+int x = 3
+print(foo())
+print(bar())

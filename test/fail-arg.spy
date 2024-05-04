@@ -1,0 +1,6 @@
+if true:
+    def foo(int x)->int:
+        return x
+
+print(foo(3))
+print(foo(3.0))
