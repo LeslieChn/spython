@@ -1,0 +1,8 @@
+def foo()->int:
+	if true:
+		return 3
+	else:
+		return 4
+
+if foo():
+	print(3)

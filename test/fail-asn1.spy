@@ -1,0 +1,7 @@
+str s = "hello"
+char x = "c"
+
+if false:
+    s = 1.0
+
+s[0] = x
