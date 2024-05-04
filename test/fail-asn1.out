@@ -1,0 +1,1 @@
+TypeError: expression of type float cannot be assigned to variable 's' with explicit type str!!
