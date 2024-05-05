@@ -35,7 +35,7 @@ docker build -t spython .
 
 once the image is ready, run it to enter the container:
 ```console
-docker run -v $PWD:/plt2024 -it spython
+docker run -v %cd%:/plt2024 -it spython
 ```
 
 ## <a name="test"></a> Test and Run
