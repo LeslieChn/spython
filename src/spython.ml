@@ -6,7 +6,7 @@ let fpath = ref ""
 let fpath_set = ref false
 let exe_name = ref ""
 let llvm_name = ref ""
-let usage_msg = "usage: ./spython [file.mc] [-o] <output>" 
+let usage_msg = "usage: ./spython source.spy [-o output]" 
 
 let speclist =
 [
