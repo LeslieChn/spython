@@ -33,19 +33,32 @@ or build the docker image may take a minute or two:
 docker build -t spython .
 ```
 
-for Linux/Mac users, run it to enter the container when the image is ready:
+for **Linux/Mac** users, run it to enter the container when the image is ready:
 ```console
 docker run -v $PWD:/plt2024 -it spython
 ```
-for windows users:
+for **Windows** users:
 ```console
 docker run -v %cd%:/plt2024 -it spython
 ```
 
 ## <a name="test"></a> Test and Run
+
+You can get the latest S-Python from [https://github.com/LeslieChn/spython.git](https://github.com/LeslieChn/spython.git)
+
+Install the compiler by running the following:
+```console
+make
+```
+Compile the file by running the following:
+```console
+./spython source.spy [-o output]
+```
+Or use the following to install the compiler, compile and run the test files in one shot:
 ```console
 make test
 ```
+You can clean up the folder by running the following:
 ```console
-./testall.sh
+make clean
 ```
