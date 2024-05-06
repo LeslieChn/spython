@@ -206,7 +206,8 @@ and check_array the_state e b =
   let (typ, e', data) = expr the_state e in
   (match typ with
   | String -> assign the_state.locals (typ, e', data) b
-  | Arr | Dyn -> assign the_state.locals (Dyn, e', data) b
+  | Arr | Dyn -> assign the_state.locals (Dyn, e', data) b 
+  | Arr_var -> let dd = (fst e', Arr) in assign the_state.locals (Dyn, dd, data) b
   | _ -> raise (Failure (Printf.sprintf "TypeError: cannot iterate over type %s in 'for' loop" (string_of_typ typ))))
 
 and check_func out data local_vars the_state = (function  
@@ -327,17 +328,29 @@ and stmt the_state = function
 
   | For(a, b, c) -> 
       let (typ, e', _) = expr the_state b in 
+      let dd = (fst e', Arr) in 
       let (m, name, inferred_t, explicit_t) = check_array the_state b a in 
       let bind_for_locals = Bind(name, inferred_t) in
       let bind_for_sast = Bind(name, inferred_t) in
       let (m', x', d, out) = stmt (change_state the_state (S_forloop(m))) c in 
-      if equals the_state.locals m' then let () = debug "equal first time" in (m', SFor(bind_for_sast, e', x'), d, bind_for_locals :: out)
-      else let (merged_out, _, exit, binds) = transform the_state.locals m' in
-      let (merged, entry, _, _) = transform m m' in 
-      let (m', x', d, out) = stmt (change_state the_state (S_forloop(merged)))  c in 
-      if equals merged m' then let () = debug "equal second time" in (merged_out, SStage(entry, SFor(bind_for_sast, e', x'), exit), match_data d None, bind_for_locals :: out @ binds) 
-      else let (merged, _, _, _) = transform merged_out m' in 
-      (merged, SStage(entry, SFor(bind_for_sast, e', x'), exit), match_data d None, bind_for_locals :: out @ binds) 
+      if typ = Arr_var then (
+        if equals the_state.locals m' then let () = debug "equal first time" in (m', SFor(bind_for_sast, dd, x'), d, bind_for_locals :: out)
+        else let (merged_out, _, exit, binds) = transform the_state.locals m' in
+        let (merged, entry, _, _) = transform m m' in 
+        let (m', x', d, out) = stmt (change_state the_state (S_forloop(merged)))  c in 
+        if equals merged m' then let () = debug "equal second time" in (merged_out, SStage(entry, SFor(bind_for_sast, dd, x'), exit), match_data d None, bind_for_locals :: out @ binds) 
+        else let (merged, _, _, _) = transform merged_out m' in 
+        (merged, SStage(entry, SFor(bind_for_sast, e', x'), exit), match_data d None, bind_for_locals :: out @ binds) 
+      ) 
+      else (
+        if equals the_state.locals m' then let () = debug "equal first time" in (m', SFor(bind_for_sast, e', x'), d, bind_for_locals :: out)
+        else let (merged_out, _, exit, binds) = transform the_state.locals m' in
+        let (merged, entry, _, _) = transform m m' in 
+        let (m', x', d, out) = stmt (change_state the_state (S_forloop(merged)))  c in 
+        if equals merged m' then let () = debug "equal second time" in (merged_out, SStage(entry, SFor(bind_for_sast, e', x'), exit), match_data d None, bind_for_locals :: out @ binds) 
+        else let (merged, _, _, _) = transform merged_out m' in 
+        (merged, SStage(entry, SFor(bind_for_sast, e', x'), exit), match_data d None, bind_for_locals :: out @ binds) 
+      )
 
 
  | Range(a, b, c) -> 

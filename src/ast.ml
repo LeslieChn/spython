@@ -77,6 +77,7 @@ let rec string_of_typ = function
   | String -> "str"
   | Dyn -> "dyn"
   | Arr -> "list"
+  | Arr_var -> "list_var"
   | FuncType -> "func"
   | Object -> "object"
   | Null -> "null"

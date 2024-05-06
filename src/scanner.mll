@@ -57,6 +57,7 @@ rule token = parse
  | "&&"     { AND }
  | "||"     { OR }
  | "not"    { NOT }
+ | "char"   { STRING }
  | "if"     { IF }
  | "else"   { ELSE }
  | "$noelse" { NOELSE }
@@ -78,10 +79,10 @@ rule token = parse
  | "pass"   { PASS }
  | "assert" { ASSERT }
  | "bool"   { BOOL }
+ | "void"   { VOID }
  | "int"    { INT }
  | "float"  { FLOAT }
  | "str"    { STRING }
- | "char"    { STRING }
  | "list"   { ARR }
  | "class"  { CLASS }
  | "true" | "false" as lem { BOOL_LITERAL(bool_of_string lem)  }
