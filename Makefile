@@ -2,7 +2,7 @@
 
 OCB_FLAGS = -I src -lib unix -use-ocamlfind
 
-OCB = ./testall.sh && ocamlbuild $(OCB_FLAGS) 
+OCB = ocamlbuild $(OCB_FLAGS) 
 
 all: clean native 
 
