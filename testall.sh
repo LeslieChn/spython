@@ -1,10 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 
-# Regression testing script for Coral
-# Taken largely from provide MicroC script
-#  Step through a list of files
-#  Compile, run, and check the output of each expected-to-work test
-#  Compile and check the error of each expected-to-fail test
+if [[ "$OSTYPE" == "cygwin" ]]; then
+	sed -i 's/\r//g' "$0"
+fi
 
 # Path to the LLVM interpreter
 LLI="lli"
