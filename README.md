@@ -33,7 +33,11 @@ or build the docker image may take a minute or two:
 docker build -t spython .
 ```
 
-once the image is ready, run it to enter the container:
+for Linux/Mac users, run it to enter the container when the image is ready:
+```console
+docker run -v $PWD:/plt2024 -it spython
+```
+for windows users:
 ```console
 docker run -v %cd%:/plt2024 -it spython
 ```
