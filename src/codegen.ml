@@ -105,7 +105,8 @@ let translate prgm except =
   and ctype_sub_idx = 1
   and ctype_mul_idx = 2
   and ctype_div_idx = 3
-  and ctype_exp_idx = 4
+  and ctype_mod_idx = 4
+  and ctype_exp_idx = 21
   and ctype_eq_idx = 5
   and ctype_neq_idx = 6
   and ctype_lesser_idx = 7
@@ -126,6 +127,7 @@ let translate prgm except =
   and ctype_sub_t = L.function_type cobj_pt [| cobj_pt; cobj_pt |]
   and ctype_mul_t = L.function_type cobj_pt [| cobj_pt; cobj_pt |]
   and ctype_div_t = L.function_type cobj_pt [| cobj_pt; cobj_pt |]
+  and ctype_mod_t = L.function_type cobj_pt [| cobj_pt; cobj_pt |]
   and ctype_exp_t = L.function_type cobj_pt [| cobj_pt; cobj_pt |]
   and ctype_eq_t = L.function_type cobj_pt [| cobj_pt; cobj_pt |]
   and ctype_neq_t = L.function_type cobj_pt [| cobj_pt; cobj_pt |]
@@ -146,6 +148,7 @@ let translate prgm except =
   and ctype_sub_pt = L.pointer_type ctype_sub_t
   and ctype_mul_pt = L.pointer_type ctype_mul_t
   and ctype_div_pt = L.pointer_type ctype_div_t
+  and ctype_mod_pt = L.pointer_type ctype_mod_t
   and ctype_exp_pt = L.pointer_type ctype_exp_t
   and ctype_eq_pt = L.pointer_type ctype_eq_t
   and ctype_neq_pt = L.pointer_type ctype_neq_t
@@ -172,6 +175,7 @@ let translate prgm except =
   	ctype_sub_pt;
   	ctype_mul_pt;
     ctype_div_pt;
+    ctype_mod_pt;
     ctype_exp_pt;
     ctype_eq_pt;
     ctype_neq_pt;
@@ -505,6 +509,7 @@ let translate prgm except =
        Oprt("sub", Some((L.build_sub), int_t), Some((L.build_fsub), float_t), None, None, None, None, None);
        Oprt("mul", Some((L.build_mul), int_t), Some((L.build_fmul), float_t), None, None, None, None, None);
        Oprt("div", Some((L.build_sdiv), int_t), Some((L.build_fdiv), float_t), None, None, None, None, None);
+       Oprt("mod", Some((L.build_srem), int_t), Some((L.build_frem), float_t), None, None, None, None, None);
        Oprt("exp", Some((build_pow), int_t), Some((build_fpow), float_t), None, None, None, None, None);
        Oprt("eq", Some((L.build_icmp L.Icmp.Eq), bool_t), Some((L.build_fcmp L.Fcmp.Ueq), bool_t), Some((L.build_icmp L.Icmp.Eq), bool_t), Some((L.build_icmp L.Icmp.Eq), bool_t), None, None, None);
        Oprt("neq", Some((L.build_icmp L.Icmp.Ne), bool_t), Some((L.build_fcmp L.Fcmp.Une), bool_t), Some((L.build_icmp L.Icmp.Eq), bool_t), Some((L.build_icmp L.Icmp.Eq), bool_t), None, None, None);
@@ -540,6 +545,7 @@ let translate prgm except =
                 | "sub" -> ctype_sub_t
                 | "mul" -> ctype_mul_t
                 | "div" -> ctype_div_t
+                | "mod" -> ctype_mod_t
                 | "exp" -> ctype_exp_t
                 | "eq" -> ctype_eq_t
                 | "neq" -> ctype_neq_t
@@ -1098,6 +1104,7 @@ let translate prgm except =
             | Sub      -> ctype_sub_idx
             | Mul      -> ctype_mul_idx
             | Div      -> ctype_div_idx
+            | Mod      -> ctype_mod_idx
             | Exp      -> ctype_exp_idx
             | Eq       -> ctype_eq_idx
             | Neq      -> ctype_neq_idx
@@ -1125,6 +1132,7 @@ let translate prgm except =
                   | Sub     -> L.build_sub
                   | Mul    -> L.build_mul
                   | Div     -> L.build_sdiv
+                  | Mod     -> L.build_srem
                   | Exp     -> build_pow
                   | Eq   -> L.build_icmp L.Icmp.Eq
                   | Neq     -> L.build_icmp L.Icmp.Ne
@@ -1140,6 +1148,7 @@ let translate prgm except =
                   | Sub     -> L.build_fsub
                   | Mul     -> L.build_fmul
                   | Div     -> L.build_fdiv
+                  | Mod     -> L.build_frem
                   | Exp     -> build_fpow
                   | Eq      -> L.build_fcmp L.Fcmp.Oeq
                   | Neq     -> L.build_fcmp L.Fcmp.One

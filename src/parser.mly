@@ -32,7 +32,7 @@
 %left EQ NEQ
 %left LT GT LEQ GEQ
 %left PLUS MINUS
-%left TIMES DIVIDE
+%left TIMES DIVIDE MOD
 %right EXP EXPEQ
 %right NOT NEG
 %left SEMI
@@ -65,6 +65,7 @@ stmt:
   | lvalue MINUSEQ expr { Asn([$1], Binop($1, Sub, $3)) }
   | lvalue TIMESEQ expr { Asn([$1], Binop($1, Mul, $3)) }
   | lvalue DIVIDEEQ expr { Asn([$1], Binop($1, Div, $3)) }
+  | lvalue MODEQ expr { Asn([$1], Binop($1, Mod, $3)) }
   | lvalue EXPEQ expr { Asn([$1], Binop($1, Exp, $3)) }
   | TYPE LPAREN expr RPAREN { Type($3) }
   | PRINT LPAREN expr RPAREN { Print($3) }
@@ -143,6 +144,7 @@ expr:
 | expr PLUS expr { Binop($1, Add, $3) }
 | expr MINUS expr { Binop($1, Sub, $3) }
 | expr TIMES expr { Binop($1, Mul, $3) }
+| expr MOD expr { Binop($1, Mod, $3) }
 | expr DIVIDE expr { Binop($1, Div, $3) }
 | expr EXP expr { Binop($1, Exp, $3) }
 | typ LPAREN expr RPAREN { Cast($1, $3) }

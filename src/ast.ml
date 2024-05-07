@@ -1,4 +1,4 @@
-type operator = Add | Sub | Mul | Div | Exp | Eq | Neq | Less | Leq | Greater | Geq | And | Or | ListAccess
+type operator = Add | Sub | Mul | Div | Mod | Exp | Eq | Neq | Less | Leq | Greater | Geq | And | Or | ListAccess
 
 type uop = Neg | Not
 
@@ -50,6 +50,7 @@ let rec string_of_op = function
   | Mul -> "*"
   | Div -> "/"
   | Exp -> "**"
+  | Mod -> "%"
   | Eq -> "=="
   | Neq -> "!="
   | Less -> "<"

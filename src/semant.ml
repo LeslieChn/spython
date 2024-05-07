@@ -7,9 +7,9 @@ let binop t1 t2 op =
   match (t1, t2) with
   | (Dyn, Dyn) | (Dyn, _) | (_, Dyn) -> Dyn
   | _ -> let same = t1 = t2 in (match op with
-    | Add | Sub | Mul | Exp when same && t1 = Int -> Int
-    | Add | Sub | Mul | Div | Exp when same && t1 = Float -> Float
-    | Add | Sub | Mul | Div | Exp when same && t1 = Bool -> Bool
+    | Add | Sub | Mul | Mod | Exp when same && t1 = Int -> Int
+    | Add | Sub | Mul | Div | Mod| Exp when same && t1 = Float -> Float
+    | Add | Sub | Mul | Div | Mod | Exp when same && t1 = Bool -> Bool
     | Add when same && t1 = String -> String
     | Less | Leq | Greater | Geq when not same && t1 = String || t2 = String -> raise except
     | Eq | Neq | Less | Leq | Greater | Geq | And | Or when same -> Bool
@@ -20,7 +20,8 @@ let binop t1 t2 op =
     | Mul when t2 = String && t1 = Int -> String
     | Add when same && is_arr t1 -> t1
     | Div when same && t1 = Int -> Int
-    | Add | Sub | Mul | Div | Exp when (t1 = Bool && t2 = Int) || (t2 = Bool && t1 = Int) -> Int
+    | Mod when same && t1 = Int -> Int
+    | Add | Sub | Mul | Div | Mod | Exp when (t1 = Bool && t2 = Int) || (t2 = Bool && t1 = Int) -> Int
     | _ -> raise except
   )
 
