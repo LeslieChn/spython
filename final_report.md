@@ -57,6 +57,7 @@ S-Python is static typed, meaning you must declare variable types explicitly. Co
 4. Control Structures:
 S-Python supports common control structures like if statements, for loops and while loops.
     ```py
+    int x = 10
     if x > 5:
         print("x is greater than 5")
     else:
@@ -70,20 +71,21 @@ S-Python supports common control structures like if statements, for loops and wh
 5. Strings:
 Strings are sequences of characters and support concatenation operation.
     ```py
-    message = "Hello, " + "Chris"
+    str message = "Hello, " + "Chris"
     print(message)
     ```
 6. Lists:
 Lists is used to store collections of items of the same type, and it's mutable.
     ```py
-    my_list = [1, 2, 3]
+    int my_list[] = [1, 2, 3]
     my_list[1] = 4
     ```
 7. Functions:
     ```py
     def add(int a, int b)->int:
         return a + b
-    add(1, 2)
+    int c = add(1, 2)
+    print(c)
     ```
 ## Architectural Design
 
