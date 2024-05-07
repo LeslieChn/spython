@@ -104,7 +104,8 @@ Semantic analysis follows syntax analysis and focuses on the meaning of the code
 5. Intermediate Code Generation:
 Once the source code has been validated syntactically and semantically, the compiler generates an LLVM intermediate representation (IR) of the program. This IR serves as an intermediate step between the high-level source code and the target machine code. Common intermediate representations include three-address code, abstract syntax trees, and control flow graphs.
 
-7. Use Clang to assemble LLVM IR into into machine-readable code - executable file. 
+7. Use Clang to assemble LLVM IR into into machine-readable code - executable file.
+
 
 ## Test Plan
 * positive test
@@ -115,6 +116,9 @@ Negative testing involves providing invalid inputs or unexpected conditions to t
 
 * stress test
 Stress testing assesses the system's behavior under extreme conditions, such as high traffic, heavy loads, or resource exhaustion. It identifies performance bottlenecks, scalability issues, and the system's breaking point.
+
+* automation
+Bash script named testall.sh automates the execution of all tests and automatically reports any errors encountered during the process
 
 ## Summary
 * State who did what
