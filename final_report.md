@@ -86,8 +86,7 @@ Lists is used to store collections of items of the same type, and it's mutable.
     add(1, 2)
     ```
 ## Architectural Design
-![ad.](/img
-/architectural design.png)
+![](img/architectural design.png)
 1. Proprocessor:
 The indentation of each line defines the scope of statement blocks. This unique feature of Python's syntax is known as the "off-side rule" or "indentation-based scoping." Code blocks are defined by their indentation level relative to the surrounding code. Each increase in indentation level signifies the beginning of a new block, and each decrease in indentation level signifies the end of a block. If the end of a block's indentation level can't find a previous beginning indentation level, an indentation error occurs. 
 
