@@ -116,19 +116,19 @@ Once the source code has been validated syntactically and semantically, the comp
 
 
 ## Test Plan
-* positive test
+* Positive test
 
     A positive test is designed to validate that a system behaves as expected when provided with valid inputs. It ensures that the software meets its functional requirements under normal operating conditions.
 
-* negative test
+* Negative test
 
     Negative testing involves providing invalid inputs or unexpected conditions to the software to verify that it handles errors gracefully. It helps identify vulnerabilities, boundary conditions, and error handling capabilities of the software.
 
-* stress test
+* Stress test
 
     Stress testing assesses the system's behavior under extreme conditions, such as high traffic, heavy loads, or resource exhaustion. It identifies performance bottlenecks, scalability issues, and the system's breaking point.
 
-* automation
+* Automation
 
     Bash script named testall.sh automates the execution of all tests and automatically reports any errors encountered during the process
 
