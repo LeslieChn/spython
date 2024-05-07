@@ -42,7 +42,6 @@ let string_of_token (t:token) =
  | RETURN -> "return" 
  | BREAK -> "break" 
  | CONTINUE -> "continue" 
- | IMPORT -> "import"
  | DEF -> "def" 
  | ARROW -> "->" 
  | COLON -> ":" 

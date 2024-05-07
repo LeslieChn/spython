@@ -7,7 +7,7 @@
 %token LPAREN RPAREN LBRACK RBRACK LBRACE RBRACE SEMI COMMA
 %token EQ NEQ LT LEQ GT GEQ AND OR NOT NEG NOP
 %token IF ELSE NOELSE ELIF WHILE FOR IN FUNC RETURN BREAK CONTINUE
-%token IMPORT DEF ARROW COLON DOT PRINT TYPE RANGE PASS ASSERT
+%token DEF ARROW COLON DOT PRINT TYPE RANGE PASS ASSERT
 %token BOOL INT FLOAT STRING ARR CLASS VOID
 %token <bool> BOOL_LITERAL
 %token <int> INT_LITERAL
@@ -51,7 +51,6 @@ stmt_list:
 stmt:
   | expr SEMI { Expr $1 }
   | stmt SEMI { $1 }
-  | IMPORT VARIABLE SEMI { Import($2) }
   | CLASS VARIABLE COLON SEMI stmt_block { Class($2, $5) }
   | DEF VARIABLE LPAREN formals_opt RPAREN COLON SEMI stmt_block { raise(Failure(Printf.sprintf "TypeError: function '%s' needs explicit type" $2))}
   | DEF VARIABLE LPAREN formals_opt RPAREN ARROW typ COLON SEMI stmt_block { Func(Bind($2, $7), $4, $10) }

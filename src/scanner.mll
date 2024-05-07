@@ -68,7 +68,6 @@ rule token = parse
  | "return" { RETURN }
  | "break"  { BREAK }
  | "continue" { CONTINUE }
- | "import" { IMPORT }
  | "def"    { DEF }
  | "->"     { ARROW }
  | ":"      { COLON }

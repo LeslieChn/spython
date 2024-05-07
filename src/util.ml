@@ -84,7 +84,6 @@ let print = function
   | Parser.DIVIDEEQ -> "DIVIDEEQ"
   | Parser.EXPEQ -> "EXPEQ"
   | Parser.PRINT -> "PRINT"
-  | Parser.IMPORT -> "IMPORT"
   | Parser.RANGE -> "RANGE"
   | Parser.NOELSE -> "NOELSE"
   | Parser.NEG -> "NEG"
