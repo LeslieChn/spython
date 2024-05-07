@@ -16,7 +16,7 @@ In essence, S-Python's integration of static typing and compilation not only equ
 1. Installation: 
 * Install Docker on your operating system, see Get Docker for more information. 
 
-* Obtain the latest version of S- Python from Github:
+* Obtain the latest version of S-  from Github:
     ```console
     git clone https://github.com/LeslieChn/spython.git
     ```
@@ -98,7 +98,7 @@ Lists is used to store collections of items of the same type, and it's mutable.
 ![ad](img/ad.png)
 
 1. Proprocessor:
-The indentation of each line defines the scope of statement blocks. This unique feature of Python's syntax is known as the "off-side rule" or "indentation-based scoping." Code blocks are defined by their indentation level relative to the surrounding code. Each increase in indentation level signifies the beginning of a new block, and each decrease in indentation level signifies the end of a block. If the end of a block's indentation level can't find a previous beginning indentation level, an indentation error occurs. 
+The indentation of each line defines the scope of statement blocks. This unique feature of S-Python's syntax is known as the "off-side rule" or "indentation-based scoping." Code blocks are defined by their indentation level relative to the surrounding code. Each increase in indentation level signifies the beginning of a new block, and each decrease in indentation level signifies the end of a block. If the end of a block's indentation level can't find a previous beginning indentation level, an indentation error occurs. 
 
 2. Lexical Analysis:
 The process begins with lexical analysis, also known as scanning. This stage involves breaking down the source code into a stream of tokens. These tokens are the smallest meaningful units in the programming language, such as keywords, identifiers, constants, and operators.
