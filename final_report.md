@@ -1,11 +1,17 @@
 # S-Python Final Project
 ## Introduction
 S-Python, a project aimed at introducing the concept of static typing and compilation to coding beginners, leverages Python as the first programming language for kids today, akin to how Logo and Scratch once served as entry points. This initiative brings forth several notable benefits:
+
 Firstly, by embracing static typing and compilation, S-Python enables compilers to identify potential issues arising from type mismatches early in the development cycle, thereby mitigating the risk of runtime errors. This preemptive approach enhances the reliability and robustness of codebases.
+
 Moreover, the explicit type declarations and strict type rules inherent in S-Python enhance code readability. Developers can easily discern the expected types of variables and function parameters, fostering clarity and comprehension within the codebase.
+
 Static typing also contributes to long-term code maintainability by reducing the likelihood of subtle bugs associated with type mismatches. This aspect simplifies code comprehension and modification, facilitating smoother software evolution over time.
+
 Additionally, S-Python's adoption of a compiled language offers performance advantages compared to interpreted languages. Compilation optimizes code execution, leading to enhanced program efficiency and responsiveness.
+
 In essence, S-Python's integration of static typing and compilation not only equips beginners with foundational programming concepts but also instills best practices for code reliability, readability, and performance optimization.
+
 ## Language Tutorial
 1. Installation: 
 * Install Docker on your operating system, see Get Docker for more information. 
