@@ -11,13 +11,13 @@ S-Python is an educational tool that introduces the concepts of static typing an
 ## <a name="ex"></a> Examples
 ```py
 def gcd(int a, int b)->int:
-    while (a != b):
-        if (a > b):    
-            a = a - b
-        else:
-            b = b - a
-    return a
-print(gcd (1234342213, 334232))
+	int t = a
+	while b != 0:
+		t = a
+		a = b
+		b = t % b
+	return a
+print(gcd(1234342213, 334232))
 ```
 ## <a name="install"></a> Installation
 
