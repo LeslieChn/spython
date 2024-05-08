@@ -9,8 +9,8 @@ LLC="llc"
 # Path to the C compiler
 CC="cc"
 
-# Path to the coralc compiler.
-CORAL="./spython"
+# Path to the compiler.
+TARGET="./spython"
 
 # Set time limit for all operations
 ulimit -t 30
@@ -86,7 +86,7 @@ CheckLLVM() {
 
     generatedfiles="$generatedfiles ${basename}.ll ${basename}.s ${basename}.exe ${basename}.out" &&
 
-    Run "$CORAL" "$1" ">" "${basename}.out" &&
+    Run "$TARGET" "$1" ">" "${basename}.out" &&
     Compare ${basename}.out ${reffile}.out ${basename}.diff
 
     # Report the status and clean up the generated files
@@ -119,7 +119,7 @@ CheckSemant() {
 
     generatedfiles="$generatedfiles ${basename}.out" &&
 
-    Run "$CORAL" "-no-compile" "$1" ">" "${basename}.out" &&
+    Run "$TARGET" "-no-compile" "$1" ">" "${basename}.out" &&
     Compare ${basename}.out ${reffile}.out ${basename}.diff
 
     # Report the status and clean up the generated files
@@ -140,7 +140,7 @@ if [ $# -ge 1 ]
 then
     files=$@
 else
-    files="test/test-*.spy"
+    files="test/test-*.spy test/stest-*.spy test/fail-*.spy"
 fi
 
 for file in $files
