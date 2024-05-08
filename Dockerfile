@@ -1,5 +1,9 @@
-FROM ocaml/opam:ubuntu-20.04-ocaml-4.07
-SHELL [ "/bin/bash", "-c" ]
-ENV SHELL=/bin/bash
-RUN DEBIAN_FRONTEND=noninteractive sudo apt update && sudo apt install -y -qq python2 make cmake clang llvm-10 dos2unix vim && opam pin llvm 10.0.0 && opam install ocamlbuild
+FROM ubuntu:18.04
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y --no-install-recommends sudo m4 make clang ocaml llvm-6.0-dev m4 cmake pkg-config aspcud ca-certificates python dos2unix vim opam
+
 WORKDIR /plt2024
+
+RUN opam init
+
+RUN opam install llvm
