@@ -135,19 +135,31 @@ Once the source code has been validated syntactically and semantically, the comp
 ## Summary
 * State who did what
 * Individual Team Member Contribution
+
     Leslie:
+
     Richard:
+
     Yongyi:
+
     John:
+
     Henry:
+
     Joseph: finding relevant information from past projects, drafting of language reference manual, experimenting with development infrastructure
 * Each team member should explain his or her most important takeaways from working on this project
     Leslie:
+
     Richard:
+
     Yongyi:
+
     John:
+
     Henry:
+
     Joseph: Unit testing is important. Finishing a test-able prototypes such as a HelloWorld frontend is more helpful and easier to navigate than finishing large chunks of the code and only then beginning to test and debug.
+
 * Include any advice the team has for future teams
     1. Understand the Problem Domain: Before implementing, ensure you thoroughly understand the problem domain. Familiarize yourself with compiler theory, parsing techniques, and language design principles.
     2. Break it Down: A compiler is a complex system composed of several stages (lexical analysis, parsing, semantic analysis, optimization, code generation, etc.). Break down the project into smaller, manageable tasks. This makes it easier to tackle and allows for incremental progress.
