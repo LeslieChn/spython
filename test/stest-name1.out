@@ -1,0 +1,1 @@
+TypeError: expression of type int cannot be assigned to variable 'foo' with explicit type func!!

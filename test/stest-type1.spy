@@ -1,10 +1,9 @@
-def int gcd(int a, int b)->int:
+def gcd(int a, int b)->int:
 	while a != b: 
-	if a > b: 
-	    a = a - b
-	else: 
-		b = b - a
-    return a
-
+		if a > b: 
+		    a = a - b
+		else: 
+			b = b - a
+	return a
 int y = gcd(100253, 135053)
 type(y)
