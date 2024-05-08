@@ -119,7 +119,7 @@ CheckSemant() {
 
     generatedfiles="$generatedfiles ${basename}.out" &&
 
-    Run "$TARGET" "-no-compile" "$1" ">" "${basename}.out" &&
+    Run "$TARGET" "$1" ">" "${basename}.out" &&
     Compare ${basename}.out ${reffile}.out ${basename}.diff
 
     # Report the status and clean up the generated files
