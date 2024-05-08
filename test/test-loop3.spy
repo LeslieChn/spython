@@ -1,0 +1,4 @@
+int out = 3
+for int i in [1, 2, 3, 4]:
+	out += i
+print (out)

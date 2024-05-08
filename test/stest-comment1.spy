@@ -1,0 +1,12 @@
+int x = 3 # single line comments
+type(x) # int
+
+'''it turns out multiline comments are harde
+really?'''
+
+def foo()->int:
+	int x = 3
+#	x = 5
+	x = 4
+	return x
+

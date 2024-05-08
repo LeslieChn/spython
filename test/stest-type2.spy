@@ -1,0 +1,8 @@
+def concat(str a, str b)->str:
+	return a + b
+
+str a = ""
+for char c in ["1", "2", "3"]:
+	a = concat(a, c)
+print(a)
+type(a)

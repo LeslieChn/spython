@@ -1,0 +1,4 @@
+int x = 3
+
+if bool(x):
+	type(x)

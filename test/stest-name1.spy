@@ -1,0 +1,7 @@
+def foo(int x)->int:
+	return x
+
+int y = foo(3)
+
+foo = 5
+type(foo + 3)

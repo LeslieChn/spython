@@ -1,0 +1,15 @@
+int x = 3
+type(x)
+
+str x = "hello"
+type(x)
+
+float x = 3.0
+type(x)
+
+bool x = true
+type(x)
+
+x = false
+type(x)
+

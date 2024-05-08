@@ -1,0 +1,8 @@
+int z = 3
+int x = 0
+if false:
+	x = 4
+else:
+	def x()->int:
+		return 1
+print(x+1)

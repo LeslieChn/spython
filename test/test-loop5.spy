@@ -1,0 +1,9 @@
+for int i in [1, 2, 3]:
+    print(i)
+
+for char c in "hello":
+    print(c)
+
+for int i in range(5):
+    print(i)
+

@@ -1,0 +1,5 @@
+str out = "a"
+for char i in "hello":
+    out = i + out
+
+print(out)

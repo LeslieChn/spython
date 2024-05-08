@@ -1,0 +1,12 @@
+int x = 3
+
+def foo()->int:
+    int a = x
+    str x = "hello"
+    return a
+
+type(foo())
+
+str x= "hello"
+
+type(foo())

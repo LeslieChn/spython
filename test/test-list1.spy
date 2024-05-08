@@ -1,2 +1,7 @@
 int x[] = [1, 2, 3]
 
+def foo()->int:
+	int y = x[1] + 3
+	return y
+	
+print(foo())
