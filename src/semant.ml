@@ -150,12 +150,12 @@ and exp the_state = function
             (match data with
               | Some (typ2, e', d) ->
                   let Bind(n1, btype) = name in 
-                  if btype <> Dyn && btype <> typ2 then if typ2 <> Dyn 
-                  then raise (Failure (Printf.sprintf "TypeError: invalid return type (expected %s but found %s)" (string_of_typ btype) (string_of_typ typ2))) 
-                  else let func = { styp = btype; sfname = n1; sformals = (List.rev bindout); slocals = locals; sbody = block } in 
-                    (btype, (SCall(e, (List.rev exprout), SFunc(func))), d) 
-                  else let func = { styp = typ2; sfname = n1; sformals = (List.rev bindout); slocals = locals; sbody = block } in
-                  (typ2, (SCall(e, (List.rev exprout), SFunc(func))), d)
+                    if btype <> Dyn && btype <> typ2 then if typ2 <> Dyn 
+                    then raise (Failure (Printf.sprintf "TypeError: invalid return type (expected %s but found %s)" (string_of_typ btype) (string_of_typ typ2))) 
+                    else let func = { styp = btype; sfname = n1; sformals = (List.rev bindout); slocals = locals; sbody = block } in 
+                      (btype, (SCall(e, (List.rev exprout), SFunc(func))), d) 
+                    else let func = { styp = typ2; sfname = n1; sformals = (List.rev bindout); slocals = locals; sbody = block } in
+                    (typ2, (SCall(e, (List.rev exprout), SFunc(func))), d)
               | None ->
                   let Bind(n1, btype) = name in if btype <> Dyn then
                   raise (Failure (Printf.sprintf "TypeError: invalid return type (expected %s but found None)" (string_of_typ btype))) else
@@ -305,12 +305,20 @@ and stmt the_state = function
     let (map2, block, data, locals) = (stmt (change_state the_state (S_noeval(map''))) c) in
       (match data with
         | Some (typ2, e', d) ->
-            if btype <> Dyn && btype <> typ2 then if typ2 <> Dyn then 
-            raise (Failure ("TypeError: invalid return type " ^ string_of_typ typ2 ^ " from function " ^ fn_name)) else 
-            let func = { styp = btype; sfname = fn_name; sformals = bindout; slocals = locals; sbody = block } in 
-              (map', SFunc(func), None, [Bind(fn_name, FuncType)]) else
-              let func = { styp = typ2; sfname = fn_name; sformals = bindout; slocals = locals; sbody = block } in 
-            (map', SFunc(func), None, [Bind(fn_name, FuncType)])
+            if typ2 = Arr_var then
+                if btype <> Dyn && btype <> typ2 then if typ2 <> Arr_var then 
+                raise (Failure ("TypeError: invalid return type " ^ string_of_typ typ2 ^ " from function " ^ fn_name)) else 
+                let func = { styp = btype; sfname = fn_name; sformals = bindout; slocals = locals; sbody = block } in 
+                  (map', SFunc(func), None, [Bind(fn_name, FuncType)]) else
+                  let func = { styp = Arr; sfname = fn_name; sformals = bindout; slocals = locals; sbody = block } in 
+                (map', SFunc(func), None, [Bind(fn_name, FuncType)])
+            else
+                if btype <> Dyn && btype <> typ2 then if typ2 <> Dyn then 
+                raise (Failure ("TypeError: invalid return type " ^ string_of_typ typ2 ^ " from function " ^ fn_name)) else 
+                let func = { styp = btype; sfname = fn_name; sformals = bindout; slocals = locals; sbody = block } in 
+                  (map', SFunc(func), None, [Bind(fn_name, FuncType)]) else
+                  let func = { styp = typ2; sfname = fn_name; sformals = bindout; slocals = locals; sbody = block } in 
+                (map', SFunc(func), None, [Bind(fn_name, FuncType)])
         
         | None -> 
           if btype <> Dyn then 
@@ -386,7 +394,7 @@ and stmt the_state = function
 
 
   | Nop -> (the_state.locals, SNop, None, [])
-  | Print(e) -> let (t, e', _) = expr the_state e in (the_state.locals, SPrint(e'), None, [])
+  | Print(e) -> let (t, e', _) = expr the_state e in if t = Arr_var then let e' = (fst e', Arr) in (the_state.locals, SPrint(e'), None, []) else (the_state.locals, SPrint(e'), None, []) 
   | Type(e) -> let (t, e', _) = expr the_state e in
     (the_state.locals, SType(e'), None, [])
 
