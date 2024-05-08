@@ -1,9 +1,4 @@
 #!/bin/bash
-
-if [[ "$OSTYPE" == "cygwin" ]]; then
-	sed -i 's/\r//g' "$0"
-fi
-
 # Path to the LLVM interpreter
 LLI="lli"
 #LLI="/usr/local/opt/llvm/bin/lli"
