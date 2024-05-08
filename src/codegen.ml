@@ -72,7 +72,7 @@ let translate prgm except =
 
   let context = L.global_context () in
   
-  let the_module = L.create_module context "Coral" in
+  let the_module = L.create_module context "Spython" in
   let pm() = L.dump_module the_module in
 
   let int_t      = L.i32_type    context
@@ -105,24 +105,24 @@ let translate prgm except =
   and ctype_sub_idx = 1
   and ctype_mul_idx = 2
   and ctype_div_idx = 3
-  and ctype_mod_idx = 4
-  and ctype_exp_idx = 21
-  and ctype_eq_idx = 5
-  and ctype_neq_idx = 6
-  and ctype_lesser_idx = 7
-  and ctype_leq_idx = 8
-  and ctype_greater_idx = 9
-  and ctype_geq_idx = 10
-  and ctype_and_idx = 11
-  and ctype_or_idx = 12
-  and ctype_idx_idx = 13
-  and ctype_idx_parent_idx = 14
-  and ctype_neg_idx = 15
-  and ctype_not_idx = 16
-  and ctype_heapify_idx = 17
-  and ctype_print_idx = 18
-  and ctype_call_idx = 19
-  and num_ctype_idxs = 20 in
+  and ctype_exp_idx = 4
+  and ctype_mod_idx = 5 
+  and ctype_eq_idx = 6
+  and ctype_neq_idx = 7
+  and ctype_lesser_idx = 8
+  and ctype_leq_idx = 9
+  and ctype_greater_idx = 10
+  and ctype_geq_idx = 11
+  and ctype_and_idx = 12
+  and ctype_or_idx = 13
+  and ctype_idx_idx = 14
+  and ctype_idx_parent_idx = 15
+  and ctype_neg_idx = 16
+  and ctype_not_idx = 17
+  and ctype_heapify_idx = 18
+  and ctype_print_idx = 19
+  and ctype_call_idx = 20
+  and num_ctype_idxs = 21 in
   let ctype_add_t = L.function_type cobj_pt [| cobj_pt; cobj_pt |]
   and ctype_sub_t = L.function_type cobj_pt [| cobj_pt; cobj_pt |]
   and ctype_mul_t = L.function_type cobj_pt [| cobj_pt; cobj_pt |]
@@ -174,8 +174,8 @@ let translate prgm except =
   	ctype_add_pt;
   	ctype_sub_pt;
   	ctype_mul_pt;
+  	ctype_mod_pt;
     ctype_div_pt;
-    ctype_mod_pt;
     ctype_exp_pt;
     ctype_eq_pt;
     ctype_neq_pt;
@@ -508,8 +508,8 @@ let translate prgm except =
   	   Oprt("add", Some((L.build_add), int_t), Some((L.build_fadd), float_t), None, None, Some((L.build_add), clist_t), Some((L.build_add), cstring_t), None);
        Oprt("sub", Some((L.build_sub), int_t), Some((L.build_fsub), float_t), None, None, None, None, None);
        Oprt("mul", Some((L.build_mul), int_t), Some((L.build_fmul), float_t), None, None, None, None, None);
-       Oprt("div", Some((L.build_sdiv), int_t), Some((L.build_fdiv), float_t), None, None, None, None, None);
        Oprt("mod", Some((L.build_srem), int_t), Some((L.build_frem), float_t), None, None, None, None, None);
+       Oprt("div", Some((L.build_sdiv), int_t), Some((L.build_fdiv), float_t), None, None, None, None, None);
        Oprt("exp", Some((build_pow), int_t), Some((build_fpow), float_t), None, None, None, None, None);
        Oprt("eq", Some((L.build_icmp L.Icmp.Eq), bool_t), Some((L.build_fcmp L.Fcmp.Ueq), bool_t), Some((L.build_icmp L.Icmp.Eq), bool_t), Some((L.build_icmp L.Icmp.Eq), bool_t), None, None, None);
        Oprt("neq", Some((L.build_icmp L.Icmp.Ne), bool_t), Some((L.build_fcmp L.Fcmp.Une), bool_t), Some((L.build_icmp L.Icmp.Eq), bool_t), Some((L.build_icmp L.Icmp.Eq), bool_t), None, None, None);
