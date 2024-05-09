@@ -271,7 +271,7 @@ and stmt the_state = function
         let (t2, e2, _) = expr the_state index in
         if t1 <> Dyn && not (is_arr t1) || t2 <> Int && t2 <> Dyn || t1 == String 
           then raise (Failure ("TypeError: invalid types (" ^ string_of_typ t1 ^ ", " ^ string_of_typ t2 ^ ") for list assignment"))
-        else (aux (m, SLListAccess (e1, e2) :: lvalues, locals) t)
+          else (aux (m, SLListAccess ((fst e1, Arr), e2) :: lvalues, locals) t)
 
       | ListSlice(e, low, high) :: t -> raise (Failure "SNotImplementedError: List Slicing has not been implemented")
 
