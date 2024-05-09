@@ -68,6 +68,7 @@ S-Python supports common control structures like if statements, for loops and wh
         print("x is greater than 5")
     else:
         print("x is less than or equal to 5")
+    int my_list[] = [1, 2, 3]
     for int num in my_list:
         print(num)
     while x > 0:
@@ -78,7 +79,6 @@ S-Python supports common control structures like if statements, for loops and wh
 Strings are sequences of characters and support concatenation operation.
     ```py
     str message = "Hello, " + "Chris"
-    print(message)
     ```
 6. Lists:
 Lists is used to store collections of items of the same type, and it's mutable.
@@ -91,7 +91,6 @@ Lists is used to store collections of items of the same type, and it's mutable.
     def add(int a, int b)->int:
         return a + b
     int c = add(1, 2)
-    print(c)
     ```
 ## Architectural Design
 
