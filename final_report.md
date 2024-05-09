@@ -138,7 +138,7 @@ Once the source code has been validated syntactically and semantically, the comp
 
     Leslie:
 
-    Richard:
+    Richard: Aided in choosing the desired language to create from the few choices we outlined in the beginning of the project. Ran the test cases to ensure they passed. Looked into the test cases to make sure the language expected as intened under valid and invalid inputs. Aided in throubleshooting the docker image and ensuring the instructions worked as intended.
 
     Yongyi:
 
@@ -150,7 +150,7 @@ Once the source code has been validated syntactically and semantically, the comp
 * Each team member should explain his or her most important takeaways from working on this project
     Leslie:
 
-    Richard:
+    Richard: Testing is a great time saving tool to provide rapid code coverage under code changes. With good tests, confidence in the project is improved. On the other hand, one should not purely rely on test cases and the team should still stress test the codebase with different inputs throughout the development process.
 
     Yongyi:
 
