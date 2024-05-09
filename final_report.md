@@ -140,7 +140,8 @@ Once the source code has been validated syntactically and semantically, the comp
 
     Richard: Aided in choosing the desired language to create from the few choices we outlined in the beginning of the project. Ran the test cases to ensure they passed. Looked into the test cases to make sure the language expected as intened under valid and invalid inputs. Aided in throubleshooting the docker image and ensuring the instructions worked as intended.
 
-    Yongyi:
+    Yongyi: Working on the language reference manual; designing several features and solving the problems; solving the environment problem for Windows users by using Docker.
+
 
     John:
 
@@ -152,7 +153,7 @@ Once the source code has been validated syntactically and semantically, the comp
 
     Richard: Testing is a great time saving tool to provide rapid code coverage under code changes. With good tests, confidence in the project is improved. On the other hand, one should not purely rely on test cases and the team should still stress test the codebase with different inputs throughout the development process.
 
-    Yongyi:
+    Yongyi: Designing a language is super complicated and time consuming, even if based on an existing language. We have to design carefully and consider every potential problem behind our design. Sometimes we meet unexpected problems but finding and fixing all the problems is the most valuable part of this project.
 
     John:
 
