@@ -144,7 +144,7 @@ Once the source code has been validated syntactically and semantically, the comp
 
     John:
 
-    Henry:
+    Henry: Worked on developing the motivations for the project, helped define the goals for our language reference manual and helped develop the automation for testing in order to work on multiple environements. Managed the teams deliverables and meetings and helped where I could on debugging.
 
     Joseph: finding relevant information from past projects, drafting of language reference manual, experimenting with development infrastructure
 * Each team member should explain his or her most important takeaways from working on this project
@@ -156,7 +156,7 @@ Once the source code has been validated syntactically and semantically, the comp
 
     John:
 
-    Henry:
+    Henry: Setting up a working envrionment is super improtant. Navigating different OS systems makes this slightly more challenging than expected. In addition, planning early and not biting off too much than what you can handle would be advice I give future teams. Programming languages are complicated, so not boiling the ocean is important. 
 
     Joseph: Unit testing is important. Finishing a test-able prototypes such as a HelloWorld frontend is more helpful and easier to navigate than finishing large chunks of the code and only then beginning to test and debug.
 
