@@ -141,8 +141,7 @@ Once the source code has been validated syntactically and semantically, the comp
 
     Yongyi: Working on the language reference manual; designing several features and solving the problems; solving the environment problem for Windows users by using Docker.
 
-
-    John:
+    John: Contributed to the development of our programming language foundation, by assisting in identifying pre-existing programming languages suitable to our project motivations. Aided with debugging by reviewing source and test code. Ensured expected language functionality through testing in both Linux and Windows environments. Helped with multi-environment automation testing.
 
     Henry: Worked on developing the motivations for the project, helped define the goals for our language reference manual and helped develop the automation for testing in order to work on multiple environements. Managed the teams deliverables and meetings and helped where I could on debugging.
 
@@ -154,7 +153,7 @@ Once the source code has been validated syntactically and semantically, the comp
 
     Yongyi: Designing a language is super complicated and time consuming, even if based on an existing language. We have to design carefully and consider every potential problem behind our design. Sometimes we meet unexpected problems but finding and fixing all the problems is the most valuable part of this project.
 
-    John:
+    John: Establishing a clear and coherent vision to strive for early on, as well as maintaining a regular stream of communication with your teammates, is crucial for effectively guiding project development. Additionally, acquiring a strong understanding of language architecture is extremely important not only for development, but for troubleshooting.
 
     Henry: Setting up a working envrionment is super improtant. Navigating different OS systems makes this slightly more challenging than expected. In addition, planning early and not biting off too much than what you can handle would be advice I give future teams. Programming languages are complicated, so not boiling the ocean is important. 
 
