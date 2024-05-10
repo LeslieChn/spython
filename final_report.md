@@ -135,7 +135,7 @@ Once the source code has been validated syntactically and semantically, the comp
 * State who did what
 * Individual Team Member Contribution
 
-    Leslie:
+    Leslie:Keep up the version control, break down the tasks into small pieces, and get the system ready.
 
     Richard: Aided in choosing the desired language to create from the few choices we outlined in the beginning of the project. Ran the test cases to ensure they passed. Looked into the test cases to make sure the language expected as intened under valid and invalid inputs. Aided in throubleshooting the docker image and ensuring the instructions worked as intended.
 
@@ -145,9 +145,10 @@ Once the source code has been validated syntactically and semantically, the comp
 
     Henry: Worked on developing the motivations for the project, helped define the goals for our language reference manual and helped develop the automation for testing in order to work on multiple environements. Managed the teams deliverables and meetings and helped where I could on debugging.
 
-    Joseph: finding relevant information from past projects, drafting of language reference manual, experimenting with development infrastructure
+    Joseph: finding relevant information from past projects, drafting of the language reference manual, experimenting with development infrastructure.
+  
 * Each team member should explain his or her most important takeaways from working on this project
-    Leslie:
+    Leslie: It's important to manage the schedule and keep everything documented.
 
     Richard: Testing is a great time saving tool to provide rapid code coverage under code changes. With good tests, confidence in the project is improved. On the other hand, one should not purely rely on test cases and the team should still stress test the codebase with different inputs throughout the development process.
 
@@ -155,7 +156,7 @@ Once the source code has been validated syntactically and semantically, the comp
 
     John: Establishing a clear and coherent vision to strive for early on, as well as maintaining a regular stream of communication with your teammates, is crucial for effectively guiding project development. Additionally, acquiring a strong understanding of language architecture is extremely important not only for development, but for troubleshooting.
 
-    Henry: Setting up a working envrionment is super improtant. Navigating different OS systems makes this slightly more challenging than expected. In addition, planning early and not biting off too much than what you can handle would be advice I give future teams. Programming languages are complicated, so not boiling the ocean is important. 
+    Henry: Setting up a working environment is super important. Navigating different OS systems makes this slightly more challenging than expected. In addition, planning early and not biting off too much than what you can handle would be advice I give future teams. Programming languages are complicated, so not boiling the ocean is important.
 
     Joseph: Unit testing is important. Finishing a test-able prototypes such as a HelloWorld frontend is more helpful and easier to navigate than finishing large chunks of the code and only then beginning to test and debug.
 
